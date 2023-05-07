@@ -23,7 +23,7 @@
 
         <div class="mt-8">
           <div class="mt-6">
-            <form action="#" method="POST" class="space-y-6">
+            <form @submit.prevent="submit" action="/register" method="POST" class="space-y-6">
               <div class="block text-sm font-medium leading-6 text-gray-900">
                 <div class="mt-1">
                   <BaseInput
@@ -89,6 +89,7 @@
 
 <script setup>
 import BaseInput from '@/components/BaseInput.vue'
+import axios from 'axios'
 import { reactive } from 'vue'
 
 const form = reactive({
@@ -96,4 +97,18 @@ const form = reactive({
   email: '',
   password: ''
 })
+
+const submit = async () => {
+  console.log(form)
+  await axios.get('/sanctum/csrf-cookie') // 1ere request de securité autoriser si app est ok coté front
+
+  await axios
+    .post('/register', form) // second request
+    .then((res) => {
+      console.log(res) // si succès 
+    })
+    .catch((err) => {
+      console.log(err) // si erreur
+    })
+}
 </script>
