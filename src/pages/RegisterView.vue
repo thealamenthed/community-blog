@@ -109,6 +109,11 @@ const submit = async () => {
     })
     .catch((err) => {
       console.log(err) // si erreur
+      switch(err.response.status){
+        case 422:
+          console.log(err.response.data.email[0])
+          break
+      }
     })
 }
 </script>
