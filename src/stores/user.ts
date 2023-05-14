@@ -20,6 +20,20 @@ export const useUserStore = defineStore({
     },
 
     actions: {
+        async csrf() {
+            await axios.get('/sanctum/csrf-cookie')
+        },
+
+        async register(props) {
+            this.errors = []
+            await this.csrf()
+            await axios.post('/register', props).then((response) => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
 
     }
 })

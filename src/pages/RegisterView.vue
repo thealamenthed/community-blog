@@ -91,6 +91,10 @@
 import BaseInput from '@/components/BaseInput.vue'
 import axios from 'axios'
 import { reactive } from 'vue'
+import { useUserStore } from '@/stores/user.ts'
+import { useRouter } from 'vue-'
+
+const user = useUserStore()
 
 const form = reactive({
   name: '',
@@ -98,24 +102,26 @@ const form = reactive({
   password: ''
 })
 
-const submit = async () => {
-  console.log(form)
-  await axios.get('/sanctum/csrf-cookie') // 1ere request de securité autoriser si app est ok coté front
+// const submit = async () => {
+//   console.log(form)
+//   await axios.get('/sanctum/csrf-cookie') // 1ere request de securité autoriser si app est ok coté front
 
-  await axios.post('/register', form) // second request
-  .then(res => {
-    console.log(res) // si succès
-    if (res.status == 201) {
-      alert(res.data.message)
-    }
-  })
-  .catch(err => {
-    console.log(err) // si erreur
-    switch (err.response.status){
-      case 422:
-        console.log(err.response)
-      break
-      }
-  })
-}
+//   await axios.post('/register', form) // second request
+//   .then(res => {
+//     console.log(res) // si succès
+//     if (res.status == 201) {
+//       alert(res.data.message)
+//     }
+//   })
+//   .catch(err => {
+//     console.log(err) // si erreur
+//     switch (err.response.status){
+//       case 422:
+//         console.log(err.response)
+//       break
+//       }
+//   })
+// }
+
+const submit
 </script>
