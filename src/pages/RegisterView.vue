@@ -102,18 +102,20 @@ const submit = async () => {
   console.log(form)
   await axios.get('/sanctum/csrf-cookie') // 1ere request de securité autoriser si app est ok coté front
 
-  await axios
-    .post('/register', form) // second request
-    .then((res) => {
-      console.log(res) // si succès 
-    })
-    .catch((err) => {
-      console.log(err) // si erreur
-      switch(err.response.status){
-        case 422:
-          console.log(err.response.data.email[0])
-          break
+  await axios.post('/register', form) // second request
+  .then(res => {
+    console.log(res) // si succès
+    if (res.status == 201) {
+      alert(res.data.message)
+    }
+  })
+  .catch(err => {
+    console.log(err) // si erreur
+    switch (err.response.status){
+      case 422:
+        console.log(err.response)
+      break
       }
-    })
+  })
 }
 </script>
