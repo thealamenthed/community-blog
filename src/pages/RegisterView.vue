@@ -104,9 +104,9 @@ const form = reactive({
 
 // const submit = async () => {
 //   console.log(form)
-//   await axios.get('/sanctum/csrf-cookie') // 1ere request de securité autoriser si app est ok coté front
+//   await axios.get('/sanctum/csrf-cookie') // 1ere requete de securité autoriser si app est ok coté front
 
-//   await axios.post('/register', form) // second request
+//   await axios.post('/register', form) // second requete
 //   .then(res => {
 //     console.log(res) // si succès
 //     if (res.status == 201) {
