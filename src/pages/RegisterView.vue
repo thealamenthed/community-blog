@@ -111,7 +111,7 @@ const form = reactive({
 
 const submit = () => {
   user.register(form)
-  router.push('/dashboard')
+  // router.push('/dashboard')
 }
 
 // const submit = async () => {

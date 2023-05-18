@@ -23,7 +23,7 @@ export const useUserStore = defineStore({
     },
 
     async register(props) {
-      this.displayErrors = [] // re initialise le tableau des erreurs
+      this.errors = [] // re initialise le tableau des erreurs
       await this.csrf()
       await axios
         .post('/register', props)
@@ -37,6 +37,8 @@ export const useUserStore = defineStore({
             axios.defaults.headers.common['Authorization'] = token // définis axios par défaut, toutes requetes auront en en-tete le token
             this.loggedIn = true // user est logge in
             this.user = user
+
+            this.$router.push({name: 'dashboard'})
           }
         })
         .catch((error) => {
