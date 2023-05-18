@@ -19,6 +19,12 @@
             alt="Your Company"
           />
           <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Inscription</h2>
+
+          <div v-if="user.getErrors.length" class="mt-10 text-red-500" role="alert">
+            <p v-for="error in user.getErrors" v-bind:key="error">
+              {{ error }}
+            </p>
+          </div>
         </div>
 
         <div class="mt-8">
@@ -92,7 +98,7 @@ import BaseInput from '@/components/BaseInput.vue'
 import axios from 'axios'
 import { reactive } from 'vue'
 import { useUserStore } from '@/stores/user.ts'
-import { useRouter } from 'vue-'
+import { useRouter } from 'vue-router'
 
 const user = useUserStore()
 
@@ -123,5 +129,8 @@ const form = reactive({
 //   })
 // }
 
-const submit
+const submit = () => {
+  user.register(form)
+  //rediriger
+}
 </script>
