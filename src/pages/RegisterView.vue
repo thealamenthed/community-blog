@@ -101,12 +101,18 @@ import { useUserStore } from '@/stores/user.ts'
 import { useRouter } from 'vue-router'
 
 const user = useUserStore()
+const router = useRouter()
 
 const form = reactive({
   name: '',
   email: '',
   password: ''
 })
+
+const submit = () => {
+  user.register(form)
+  router.push('/dashboard')
+}
 
 // const submit = async () => {
 //   console.log(form)
@@ -129,8 +135,5 @@ const form = reactive({
 //   })
 // }
 
-const submit = () => {
-  user.register(form)
-  //rediriger
-}
+
 </script>

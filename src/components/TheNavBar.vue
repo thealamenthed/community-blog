@@ -34,7 +34,7 @@
             </div>
 
             <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
-              <a class="flex items-center" href="/login">
+              <a class="flex items-center" href="/dashboard">
                 <XMarkIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Dashboard
               </a>
@@ -89,7 +89,7 @@
   </Popover>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {
   Menu,
   MenuButton,
