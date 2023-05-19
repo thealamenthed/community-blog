@@ -39,6 +39,17 @@
                 Dashboard
               </a>
             </div>
+
+            <div 
+            v-if="user.loggedIn"
+            @click.prevent="user.logout" 
+              
+              class="flex items-center flex-shrink-0">
+              <a class="flex items-center" href=".">
+                <XMarkIcon class="block w-6 h-6 m-2 text-slate-500" />
+                Logout
+              </a>
+            </div>
           </div>
         </div>
       </div>
