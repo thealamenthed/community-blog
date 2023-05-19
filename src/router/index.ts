@@ -28,7 +28,15 @@ const router = createRouter({
         title: 'Connexion'
       }
     },
-
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../pages/DashboardView.vue'),
+      meta: {
+        title: 'Welcome to your dashboard'
+      }
+    },
+    
 
     {
       path: '/about', 

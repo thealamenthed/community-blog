@@ -11,22 +11,32 @@
         <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
           <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
             <!-- logo -->
+            
             <div class="flex items-center flex-shrink-0">
               <a class="flex items-center" href="/">
                 <HomeIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Home
               </a>
             </div>
-            <div class="flex items-center flex-shrink-0">
+            
+            <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
               <a class="flex items-center" href="/register">
                 <UserPlusIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Register
               </a>
             </div>
-            <div class="flex items-center flex-shrink-0">
+            
+            <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
               <a class="flex items-center" href="/login">
                 <ArrowLongUpIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Login
+              </a>
+            </div>
+
+            <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
+              <a class="flex items-center" href="/dashboard">
+                <XMarkIcon class="block w-6 h-6 m-2 text-slate-500" />
+                Dashboard
               </a>
             </div>
           </div>
@@ -79,7 +89,7 @@
   </Popover>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {
   Menu,
   MenuButton,
@@ -89,15 +99,28 @@ import {
   PopoverButton,
   PopoverPanel
 } from '@headlessui/vue'
-import { MagnifyingGlassIcon, } from '@heroicons/vue/20/solid'
-import { Bars3Icon, BellIcon, XMarkIcon, HomeIcon, UserPlusIcon, ArrowLongUpIcon } from '@heroicons/vue/24/outline'
+import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import {
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+  HomeIcon,
+  UserPlusIcon,
+  ArrowLongUpIcon
+} from '@heroicons/vue/24/outline'
 
-const user = {
-  name: 'Chelsea Hagon',
-  email: 'chelsea.hagon@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-}
+import { useUserStore } from '@/stores/user'
+
+const user = useUserStore()
+
+
+// const user = {
+//   name: 'Chelsea Hagon',
+//   email: 'chelsea.hagon@example.com',
+//   imageUrl:
+//     'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+// }
+
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
   { name: 'Calendar', href: '#', current: false },

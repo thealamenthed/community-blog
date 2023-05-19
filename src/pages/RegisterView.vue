@@ -19,11 +19,17 @@
             alt="Your Company"
           />
           <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Inscription</h2>
+
+          <div v-if="user.getErrors.length" class="mt-10 text-red-500" role="alert">
+            <p v-for="error in user.getErrors" v-bind:key="error">
+              {{ error }}
+            </p>
+          </div>
         </div>
 
         <div class="mt-8">
           <div class="mt-6">
-            <form action="#" method="POST" class="space-y-6">
+            <form @submit.prevent="submit" action="/register" method="POST" class="space-y-6">
               <div class="block text-sm font-medium leading-6 text-gray-900">
                 <div class="mt-1">
                   <BaseInput
@@ -89,11 +95,45 @@
 
 <script setup>
 import BaseInput from '@/components/BaseInput.vue'
+import axios from 'axios'
 import { reactive } from 'vue'
+import { useUserStore } from '@/stores/user.ts'
+import { useRouter } from 'vue-router'
+
+const user = useUserStore()
+const router = useRouter()
 
 const form = reactive({
   name: '',
   email: '',
   password: ''
 })
+
+const submit = () => {
+  user.register(form)
+  // router.push('/dashboard')
+}
+
+// const submit = async () => {
+//   console.log(form)
+//   await axios.get('/sanctum/csrf-cookie') // 1ere requete de securité autoriser si app est ok coté front
+
+//   await axios.post('/register', form) // second requete
+//   .then(res => {
+//     console.log(res) // si succès
+//     if (res.status == 201) {
+//       alert(res.data.message)
+//     }
+//   })
+//   .catch(err => {
+//     console.log(err) // si erreur
+//     switch (err.response.status){
+//       case 422:
+//         console.log(err.response)
+//       break
+//       }
+//   })
+// }
+
+
 </script>
