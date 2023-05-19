@@ -14,7 +14,7 @@ axios.defaults.baseURL = 'https://simpledev.one/api' // définie une BaseURL pou
 const app = createApp(App)
 
 app.use(createPinia().use(({store}) => {
-    store.$router = markRaw(router) // markRaw empêche le router d'être reactif, qui empêche de retourner un proxy
+    store.$router = markRaw(router) // markRaw empêche le routeur d'être réactif, ce qui empêche le retour d'un proxy
 }))
 app.use(router)
 
