@@ -11,11 +11,18 @@
             alt="Your Company"
           />
           <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Connexion</h2>
+          
+          <div v-if="user.getErrors.length" class="mt-10 text-red-500" role="alert">
+            <p v-for="error in user.getErrors" v-bind:key="error">
+              {{ error }}
+            </p>
+          </div>
         </div>
 
         <div class="mt-8">
+        
           <div class="mt-6">
-            <form action="#" method="POST" class="space-y-6">
+            <form @submit.prevent="submit" action="/login" method="POST" class="space-y-6">
               <div class="block text-sm font-medium leading-6 text-gray-900">
                 <div class="mt-1">
                   <BaseInput
@@ -72,6 +79,13 @@
 <script setup>
 import BaseInput from '@/components/BaseInput.vue'
 import { reactive } from 'vue'
+import { useUserStore } from '@/stores/user.ts'
+
+const user = useUserStore()
+
+const submit = () => {
+  user.login(form)
+}
 
 const form = reactive({
   email: '',
