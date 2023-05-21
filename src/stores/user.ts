@@ -33,14 +33,7 @@ export const useUserStore = defineStore({
         .then((response) => {
           console.log(response)
           if (response.status == 201) {
-            const user = response.data.user
-            const token = response.data.token
-            localStorage.setItem('user', JSON.stringify(user)) // enregistre l'user et le token dans le storage et tranforme en Json 
-            localStorage.setItem('token', token)
-            axios.defaults.headers.common['Authorization'] = token // définis axios par défaut, toutes requetes auront en en-tete le token
-            this.loggedIn = true // user est login
-            this.user = user
-
+            this.loginUser(response)
             this.$router.push({ name: 'dashboard' })
           }
         })
@@ -62,13 +55,7 @@ export const useUserStore = defineStore({
       await axios.post('/login', props).then((response) => {
         console.log(response)
         if (response.status == 200) {
-          const user = response.data.user
-          const token = response.data.token
-          localStorage.setItem('user', JSON.stringify(user)) // enregistre l'user et le token dans le storage et tranforme en Json 
-          localStorage.setItem('token', token)
-          axios.defaults.headers.common['Authorization'] = token // définis axios par défaut, toutes requetes auront en en-tete le token
-          this.loggedIn = true // user est login
-          this.user = user
+          this.loginUser(response)
           this.$router.push({ name: 'dashboard' })
 
         }
@@ -103,6 +90,16 @@ export const useUserStore = defineStore({
         .catch(error => {
           console.log(error)
         })
+    },
+
+    loginUser(response) {
+      const user = response.data.user
+      const token = response.data.token
+      localStorage.setItem('user', JSON.stringify(user)) // enregistre l'user et le token dans le storage et tranforme en Json 
+      localStorage.setItem('token', token)
+      axios.defaults.headers.common['Authorization'] = token // définis axios par défaut, toutes requetes auront en en-tete le token
+      this.loggedIn = true // user est login
+      this.user = user
     }
 
   }
