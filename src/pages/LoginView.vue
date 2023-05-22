@@ -12,10 +12,9 @@
           />
           <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Connexion</h2>
           
-          <div v-if="user.getErrors.length" class="mt-10 text-red-500" role="alert">
-            <p v-for="error in user.getErrors" v-bind:key="error">
-              {{ error }}
-            </p>
+          <div>
+            <ErrorMessages v-if="user.getErrors.length" :errors='user.getErrors'
+            />
           </div>
         </div>
 
@@ -78,6 +77,7 @@
 
 <script setup>
 import BaseInput from '@/components/BaseInput.vue'
+import ErrorMessages from '@/components/ErrorMessages.vue'
 import { reactive } from 'vue'
 import { useUserStore } from '@/stores/user.ts'
 
