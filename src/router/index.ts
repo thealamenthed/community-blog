@@ -61,6 +61,16 @@ router.beforeEach((to, from, next) => {
   next();
 })
 
+router.beforeEach((to, from, next) => {
+  const user = useUserStore()
+  if(to.meta.requiresGuest && user.loggedIn) {
+    next({name: 'dashboard'})
+  }
+  else {
+    next()
+  }
+})
+
 router.beforeEach((to, from, next) => { // to = route type, from = la route courante, next = permet de passer à la suite
   const user = useUserStore()
   if(to.meta.requiresAuth && !user.loggedIn){
