@@ -17,7 +17,8 @@ const router = createRouter({
       name: 'register',
       component: () => import('../pages/RegisterView.vue'),
       meta: {
-        title: 'Inscription'
+        title: 'Inscription',
+        requiresGuest: true
       }
     },
     {
@@ -25,7 +26,8 @@ const router = createRouter({
       name: 'login',
       component: () => import('../pages/LoginView.vue'),
       meta: {
-        title: 'Connexion'
+        title: 'Connexion',
+        requiresGuest: true
       }
     },
     {
@@ -33,7 +35,8 @@ const router = createRouter({
       name: 'dashboard',
       component: () => import('../pages/DashboardView.vue'),
       meta: {
-        title: 'Welcome to your dashboard'
+        title: 'Welcome to your dashboard',
+        requiresAuth: true
       }
     },
     
