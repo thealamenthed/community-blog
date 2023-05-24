@@ -97,7 +97,7 @@ import BaseInput from '@/components/BaseInput.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import axios from 'axios'
 import { reactive } from 'vue'
-import { useUserStore } from '@/stores/user.ts'
+import { useUserStore } from '@/stores/user.js'
 import { useRouter } from 'vue-router'
 
 const user = useUserStore()

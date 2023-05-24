@@ -79,7 +79,7 @@
 import BaseInput from '@/components/BaseInput.vue'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import { reactive } from 'vue'
-import { useUserStore } from '@/stores/user.ts'
+import { useUserStore } from '@/stores/user.js'
 
 const user = useUserStore()
 

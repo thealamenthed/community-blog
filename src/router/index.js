@@ -81,6 +81,4 @@ router.beforeEach((to, from, next) => { // to = route type, from = la route cour
   }
 })
 
-
-
 export default router
