@@ -40,8 +40,7 @@ const router = createRouter({
         requiresAuth: true
       }
     },
-
-
+    
     {
       path: '/about',
       name: 'about',
