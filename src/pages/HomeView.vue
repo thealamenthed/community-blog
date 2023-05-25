@@ -31,7 +31,7 @@
 
       <!-- ====== Skeleton Section Start -->
       <div v-if="loading" class="flex flex-wrap justify-center mx-4">
-        <div v-for="index in 15" :key="index" class="w-full px-8 md:w-1/2 lg:w-1/3">
+        <div v-for="index in 9" :key="index" class="w-full px-8 md:w-1/2 lg:w-1/3">
           <div class="mx-auto mb-10 max-w-[370px]">
             <div class="mb-8 overflow-hidden rounded">
               <div class="overflow-hidden rounded w-96 bg-slate-200 h-52 animate-pulse"></div>
@@ -50,9 +50,22 @@
       <!-- ====== Skeleton Section End -->
 
       <div v-if="posts.length" class="flex flex-wrap -mx-4">
-        <div v-for="post in posts" :key="post.id" class="w-full px-4 md:w-1/2 lg:w-1/3">
+        <div
+          v-for="post in posts.slice(0, results.resultsToShow)"
+          :key="post.id"
+          class="w-full px-4 md:w-1/2 lg:w-1/3"
+        >
           <PostCard :post="post" :id="post.id" />
         </div>
+      </div>
+      <div class="flex flex-wrap justify-center">
+        <button
+          v-if="results.resultsToShow < posts.length"
+          @click="results.resultsToShow += 3"
+          class="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 rounded-md bg-blue-50 ring-1 ring-inset ring-gray-500/10"
+        >
+          Load more
+        </button>
       </div>
     </div>
   </section>
@@ -72,4 +85,8 @@ const { posts, loading, error, posts_count } = storeToRefs(store)
 
 const { getPosts } = store
 getPosts()
+
+const results = reactive({
+  resultsToShow: 9
+})
 </script>
