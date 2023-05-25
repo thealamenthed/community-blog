@@ -28,6 +28,13 @@
             <p v-if="posts_count" class="text-base text-body-color">
               Total : {{ posts_count }} posts
             </p>
+            <div>
+              <select v-model="sort" @change="getPosts(sort), resetResults()">
+                <option v-for="option in options" :key="option.value" :value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -92,6 +99,19 @@ getPosts()
 const results = reactive({
   resultsToShow: 9
 })
+
+const resetResults = () => {
+  results.resultsToShow = 9
+}
+
+const sort = ref(null)
+
+const options = ref([
+  { text: 'Newest', value: 'newest' },
+  { text: 'Oldest', value: 'oldest' },
+  { text: 'Likes', value: 'likes' },
+  { text: 'View', value: 'views' }
+])
 
 const title = ref('')
 
