@@ -25,6 +25,9 @@
               There are many variations of passages of Lorem Ipsum available but the majority have
               suffered alteration in some form.
             </p>
+            <p v-if="posts_count" class="text-base text-body-color">
+              Total : {{ posts_count }} posts
+            </p>
           </div>
         </div>
       </div>
