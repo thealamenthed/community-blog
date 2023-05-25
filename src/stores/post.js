@@ -31,6 +31,12 @@ export const usePostStore = defineStore({
             await axios.get('/posts').then((response) => {
                 this.loading = false
                 console.log(response)
+                if(response.status == 200){
+                    this.posts = []
+                    this.posts = response.data.posts
+                    this.posts_count = response.data.posts_count
+                    console.log(this.posts)
+                }
             })
             .catch(error => {
                 this.loading = false
