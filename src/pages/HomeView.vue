@@ -6,7 +6,7 @@
       <div
         class="flex items-center justify-center max-w-2xl p-16 mx-auto my-16 bg-white rounded-lg"
       >
-        <h1 class="text-2xl font-medium">Our Blogs</h1>
+        <h1 class="text-2xl font-medium">{{ title }}</h1>
       </div>
     </div>
   </div>
@@ -77,7 +77,7 @@
 
 <script setup>
 import moment from 'moment'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
 import PostCard from '@/components/PostCard.vue'
@@ -91,5 +91,13 @@ getPosts()
 
 const results = reactive({
   resultsToShow: 9
+})
+
+const title = ref('')
+
+onMounted(() => {
+  document.addEventListener('DOMContentLoaded', () => {
+    title.value = document.querySelector('head title').innerHTML
+  })
 })
 </script>
