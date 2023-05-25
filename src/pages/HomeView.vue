@@ -31,7 +31,7 @@
 
       <!-- ====== Skeleton Section Start -->
       <div v-if="loading" class="flex flex-wrap justify-center mx-4">
-        <div v-for="index in 3" :key="index" class="w-full px-8 md:w-1/2 lg:w-1/3">
+        <div v-for="index in 15" :key="index" class="w-full px-8 md:w-1/2 lg:w-1/3">
           <div class="mx-auto mb-10 max-w-[370px]">
             <div class="mb-8 overflow-hidden rounded">
               <div class="overflow-hidden rounded w-96 bg-slate-200 h-52 animate-pulse"></div>
@@ -58,8 +58,9 @@
               <span
                 class="inline-block px-4 py-1 mb-5 text-xs font-semibold leading-loose text-center rounded bg-primary"
               >
-                {{ post.user.name }}
+                {{ moment(post.created_at).fromNow() }}
               </span>
+
               <h3>
                 <a
                   href="#"
@@ -68,9 +69,14 @@
                   Meet AutoManage, the best AI management tools
                 </a>
               </h3>
-              <p class="text-base text-body-color">Cathégorie : {{ post.category.name }}</p>
+
               <p class="text-base text-body-color">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              </p>
+
+              <p class="text-sm text-gray-500">Cathégorie : {{ post.category.name }}</p>
+              <p class="text-sm text-gray-500">
+                {{ post.user.name }}
               </p>
             </div>
           </div>
@@ -82,6 +88,7 @@
 </template>
 
 <script setup>
+import moment from 'moment'
 import { ref, reactive, onMounted } from 'vue'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
