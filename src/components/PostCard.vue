@@ -1,7 +1,12 @@
 <template>
   <div class="mx-auto mb-10 max-w-[370px]">
     <div class="mb-8 overflow-hidden rounded">
-      <img :src="post.photo.thumbnail_url" :alt="post.title" class="w-full" />
+      <img
+        :data-src="post.photo.thumbnail_url"
+        :alt="post.title"
+        async="decoding"
+        class="w-full lazyload"
+      />
     </div>
     <div>
       <span
@@ -36,9 +41,22 @@ import moment from 'moment'
 import { ref, reactive } from 'vue'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
+import 'lazysizes'
 
 const props = defineProps(['post', 'id', 'likes_count'])
 
 const user = usePostStore()
 const store = storeToRefs()
 </script>
+
+<style scoped>
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 2000ms;
+}
+</style>
