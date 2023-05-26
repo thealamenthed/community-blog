@@ -62,9 +62,11 @@ const router = createRouter({
 
 // to and from are both route objects. must call `next`.
 router.beforeEach((to, from, next) => {
-  if (typeof to.meta.title === 'string') {
-    document.title = to.meta.title
+  let documentTitle = to.meta.title
+  if (to.params.title) {
+    documentTitle += ' ' + to.params.title
   }
+  document.title = documentTitle
   next()
 })
 

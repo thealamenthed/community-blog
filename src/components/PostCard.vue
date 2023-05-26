@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto mb-10 max-w-[370px]">
-    <RouterLink :to="{ name: 'post.show', params: { slug: post.slug } }">
+    <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
       <div class="mb-8 overflow-hidden rounded">
         <img
           :data-src="post.photo.thumbnail_url"
