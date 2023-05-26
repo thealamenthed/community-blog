@@ -63,12 +63,14 @@
         </p>
       </div>
       <figure class="mt-16">
-        <img
-          class="object-cover aspect-video rounded-xl bg-gray-50 lazyload"
-          async="decoding"
-          :data-src="post.photo.url"
-          :alt="post.title"
-        />
+        <a :href="post.photo.url" target="_blank">
+          <img
+            class="object-cover aspect-video rounded-xl bg-gray-50 lazyload"
+            async="decoding"
+            :data-src="post.photo.url"
+            :alt="post.title"
+          />
+        </a>
         <figcaption class="flex mt-4 text-sm leading-6 text-gray-500 gap-x-2">
           <InformationCircleIcon
             class="mt-0.5 h-5 w-5 flex-none text-gray-300"
