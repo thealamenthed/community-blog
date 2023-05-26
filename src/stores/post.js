@@ -61,8 +61,8 @@ export const usePostStore = defineStore({
         })
         .catch((error) => {
           console.log(error)
-          if (error.respons.status == 404) {
-            //redirect vers 404 page
+          if (error.response.status == 404) {
+            this.$router.push({ name: 'not-found' })
           }
         })
     }
