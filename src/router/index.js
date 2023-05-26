@@ -40,8 +40,7 @@ const router = createRouter({
         requiresAuth: true
       }
     },
-
-
+    
     {
       path: '/about',
       name: 'about',
@@ -80,7 +79,5 @@ router.beforeEach((to, from, next) => { // to = route type, from = la route cour
     next()
   }
 })
-
-
 
 export default router
