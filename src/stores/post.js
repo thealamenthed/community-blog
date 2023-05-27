@@ -43,6 +43,28 @@ export const usePostStore = defineStore({
           this.loading = false
           console.log(error)
         })
+    },
+
+    async getPost(slug) {
+      this.post = []
+      this.loading = true
+
+      this.csrf()
+      await axios
+        .get('/post/' + slug)
+        .then((response) => {
+          console.log(response)
+          this.loading = false
+          if (response.status == 200) {
+            this.post = response.data.post
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          if (error.response.status == 404) {
+            this.$router.push({ name: 'not-found' })
+          }
+        })
     }
   }
 })

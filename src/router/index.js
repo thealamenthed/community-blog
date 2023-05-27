@@ -40,7 +40,15 @@ const router = createRouter({
         requiresAuth: true
       }
     },
-    
+    {
+      path: '/post/:slug',
+      name: 'post.show',
+      component: () => import('../pages/PostView.vue'),
+      meta: {
+        title: 'Post'
+      }
+    },
+
     {
       path: '/about',
       name: 'about',
@@ -48,34 +56,43 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../pages/AboutView.vue')
+    },
+    {
+      path: '/not-found',
+      name: 'not-found',
+      component: () => import('../pages/404View.vue'),
+      meta: {
+        title: 'Page non trouvée'
+      }
     }
   ]
 })
 
 // to and from are both route objects. must call `next`.
 router.beforeEach((to, from, next) => {
-  if (typeof to.meta.title === 'string') {
-    document.title = to.meta.title;
+  let documentTitle = to.meta.title
+  if (to.params.title) {
+    documentTitle += ' ' + to.params.title
   }
-  next();
+  document.title = documentTitle
+  next()
 })
 
 router.beforeEach((to, from, next) => {
   const user = useUserStore()
-  if(to.meta.requiresGuest && user.loggedIn) {
-    next({name: 'dashboard'})
-  }
-  else {
+  if (to.meta.requiresGuest && user.loggedIn) {
+    next({ name: 'dashboard' })
+  } else {
     next()
   }
 })
 
-router.beforeEach((to, from, next) => { // to = route type, from = la route courante, next = permet de passer à la suite
+router.beforeEach((to, from, next) => {
+  // to = route type, from = la route courante, next = permet de passer à la suite
   const user = useUserStore()
-  if(to.meta.requiresAuth && !user.loggedIn){
-    next({name:'login'})
-  }
-  else {
+  if (to.meta.requiresAuth && !user.loggedIn) {
+    next({ name: 'login' })
+  } else {
     next()
   }
 })

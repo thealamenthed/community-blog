@@ -1,13 +1,15 @@
 <template>
   <div class="mx-auto mb-10 max-w-[370px]">
-    <div class="mb-8 overflow-hidden rounded">
-      <img
-        :data-src="post.photo.thumbnail_url"
-        :alt="post.title"
-        async="decoding"
-        class="w-full lazyload"
-      />
-    </div>
+    <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
+      <div class="mb-8 overflow-hidden rounded">
+        <img
+          :data-src="post.photo.thumbnail_url"
+          :alt="post.title"
+          async="decoding"
+          class="w-full lazyload"
+        />
+      </div>
+    </RouterLink>
     <div>
       <span
         class="inline-block px-4 py-1 mb-5 text-xs font-semibold leading-loose text-center rounded bg-primary"
