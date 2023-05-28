@@ -57,6 +57,7 @@ export const usePostStore = defineStore({
           this.loading = false
           if (response.status == 200) {
             this.post = response.data.post
+            window.document.title += ' - ' + this.post.title
           }
         })
         .catch((error) => {
