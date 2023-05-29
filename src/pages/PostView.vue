@@ -128,7 +128,7 @@
       </div>
       <!-- component -->
       <div>
-        <BaseComment :comments="post.comments" :post="post" @submit="onSubmit" />
+        <BaseComment :comments="post.comments" :post="post" @submit="onSubmit" :errors="errors" />
       </div>
     </div>
   </div>

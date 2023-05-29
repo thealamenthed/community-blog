@@ -69,7 +69,7 @@ export const usePostStore = defineStore({
     },
 
     async saveComment(props) {
-      this.error = []
+      this.errors = []
       this.csrf()
       await axios
         .post('/comment', props)

@@ -26,15 +26,17 @@
       <!-- comment form -->
       <div v-if="user.loggedIn" class="flex max-w-lg rounded-lg shadow-lg">
         <form @submit.prevent="submitForm" class="w-full max-w-xl px-4 pt-2 bg-white rounded-lg">
-          <div class="flex flex-wrap mb-6 -mx-3">
+          <div class="flex flex-col justify-center mb-6 -mx-3">
             <h2 class="px-4 pt-3 pb-2 text-lg text-gray-800">Add a new comment</h2>
+            <div class="p-4">
+              <ErrorMessages v-if="props.errors.length" :errors="props.errors" />
+            </div>
             <div class="w-full px-3 mt-2 mb-2 md:w-full">
               <textarea
                 v-model="form.content"
                 name="content"
                 class="w-full h-20 px-3 py-2 font-medium leading-normal placeholder-gray-700 bg-gray-100 border border-gray-400 rounded resize-none focus:outline-none focus:bg-white"
                 placeholder="Commentaire"
-                required
               ></textarea>
 
               <BaseInput v-model="form.post_id" label="" type="hidden" />
@@ -79,9 +81,11 @@ import moment from 'moment'
 
 import { useUserStore } from '@/stores/user'
 import { reactive } from 'vue'
-import BaseInput from '@/components/BaseInput.vue'
 
-const props = defineProps(['comments', 'post'])
+import BaseInput from '@/components/BaseInput.vue'
+import ErrorMessages from '@/components/ErrorMessages.vue'
+
+const props = defineProps(['comments', 'post', 'errors'])
 
 const user = useUserStore()
 
