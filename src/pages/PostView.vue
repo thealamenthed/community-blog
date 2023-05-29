@@ -126,6 +126,33 @@
         </svg>
         <span class="px-3"> {{ post.comments_count }} Commentaire(s) </span>
       </div>
+      <!-- component -->
+      <div
+        v-if="post.comments && post.comments.length"
+        class="flex w-screen h-screen bg-white dark:bg-gray-800"
+      >
+        <div
+          v-for="comment in post.comments"
+          :key="comment.id"
+          class="flex max-w-lg p-4 antialiased text-black bg-white dark:bg-gray-800 dark:text-gray-200"
+        >
+          <span
+            :style="{ backgroundImage: 'url(' + comment.user.avatar.thumbnail_url + ')' }"
+            class="w-16 h-8 mt-1 mr-2 rounded-full"
+          ></span>
+          <div>
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-3xl px-4 pt-2 pb-2.5">
+              <div class="text-sm font-semibold leading-relaxed">{{ comment.user.name }}</div>
+              <div class="leading-snug text-normal md:leading-normal">
+                {{ comment.content }}
+              </div>
+            </div>
+            <div class="text-sm ml-4 mt-0.5 text-gray-500 dark:text-gray-400">
+              {{ moment(post.created_at).fromNow() }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
