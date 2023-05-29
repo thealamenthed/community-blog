@@ -57,12 +57,36 @@ export const usePostStore = defineStore({
           this.loading = false
           if (response.status == 200) {
             this.post = response.data.post
+            window.document.title += ' - ' + this.post.title
           }
         })
         .catch((error) => {
           console.log(error)
           if (error.response.status == 404) {
             this.$router.push({ name: 'not-found' })
+          }
+        })
+    },
+
+    async saveComment(props) {
+      this.errors = []
+      this.csrf()
+      await axios
+        .post('/comment', props)
+        .then((response) => {
+          console.log(response)
+          if (response.status == 201) {
+            this.post.comments.push(response.data.comment)
+            this.post.comments_count = response.data.comments_count
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          if (error.response.status === 422) {
+            for (const key in error.response.data.errors) {
+              this.errors.push(error.response.data.errors[key][0] + ' ')
+            }
+            console.log(this.errors)
           }
         })
     }
