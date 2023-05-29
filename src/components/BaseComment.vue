@@ -27,10 +27,10 @@
       <div v-if="user.loggedIn" class="flex max-w-lg rounded-lg shadow-lg">
         <form @submit.prevent="submitForm" class="w-full max-w-xl px-4 pt-2 bg-white rounded-lg">
           <div class="flex flex-col justify-center mb-6 -mx-3">
-            <h2 class="px-4 pt-3 pb-2 text-lg text-gray-800">Add a new comment</h2>
             <div class="p-4">
               <ErrorMessages v-if="props.errors.length" :errors="props.errors" />
             </div>
+            <h2 class="px-4 pt-3 pb-2 text-lg text-gray-800">Add a new comment</h2>
             <div class="w-full px-3 mt-2 mb-2 md:w-full">
               <textarea
                 v-model="form.content"
