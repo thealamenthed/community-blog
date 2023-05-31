@@ -94,12 +94,12 @@ export const usePostStore = defineStore({
       if (!search) {
         this.$router.push({ name: 'home' })
       }
-      this.post = []
+      this.posts = []
       this.loading = true
 
       await this.csrf()
       await axios
-        .get('/search/?shearch=' + search + '&sort=' + sort)
+        .get('/search/?search=' + search + '&sort=' + sort)
         .then((response) => {
           console.log(response)
           this.loading = false

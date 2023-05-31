@@ -42,7 +42,13 @@
               Total : {{ posts_count }} posts
             </p>
             <div>
-              <select v-model="sort" @change="getPosts(sort), resetResults()">
+              <select
+                v-model="sort"
+                @change="
+                  !route.query.search ? getPosts(sort) : getSearch(route.query.search, sort),
+                    resetResults()
+                "
+              >
                 <option v-for="option in options" :key="option.value" :value="option.value">
                   {{ option.text }}
                 </option>
