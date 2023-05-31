@@ -89,6 +89,30 @@ export const usePostStore = defineStore({
             console.log(this.errors)
           }
         })
+    },
+    async getSearch(search, sort = null) {
+      if (!search) {
+        this.$router.push({ name: 'home' })
+      }
+      this.posts = []
+      this.loading = true
+
+      await this.csrf()
+      await axios
+        .get('/search/?search=' + search + '&sort=' + sort)
+        .then((response) => {
+          console.log(response)
+          this.loading = false
+          if (response.status == 200) {
+            this.posts = response.data.posts
+            this.posts_count = response.data.posts_count
+            this.$router.push({ name: 'home', query: { search: search, sort: sort } })
+          }
+        })
+        .catch((error) => {
+          this.loading = false
+          console.log(error)
+        })
     }
   }
 })
