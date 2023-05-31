@@ -15,6 +15,19 @@
   <section class="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
     <div class="container mx-auto">
       <div class="flex flex-wrap justify-center -mx-4">
+        <!-- Search bar -->
+        <form action="." method="get">
+          <div class="relative pt-2 mx-auto mb-10 text-gray-600">
+            <input
+              v-model="search"
+              class="h-10 px-5 pr-16 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
+              type="text"
+              name="search"
+              placeholder="Search"
+            />
+          </div>
+        </form>
+        <!-- End search bar -->
         <div class="w-full px-4">
           <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
             <span class="block mb-2 text-lg font-semibold text-primary"> Our Blogs </span>
@@ -83,18 +96,30 @@
 </template>
 
 <script setup>
-import moment from 'moment'
 import { ref, reactive, onMounted } from 'vue'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
 import PostCard from '@/components/PostCard.vue'
+import { useRoute } from 'vue-router'
 
 const store = usePostStore()
 
 const { posts, loading, error, posts_count } = storeToRefs(store)
+const { getPosts, getSearch } = store
 
-const { getPosts } = store
-getPosts()
+const route = useRoute()
+
+const search = ref('')
+
+const searchPosts = () => {
+  posts.getSearch(search.value)
+}
+
+if (!route.query.search) {
+  getPosts()
+} else {
+  getSearch(route.query.search)
+}
 
 const results = reactive({
   resultsToShow: 9
