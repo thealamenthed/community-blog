@@ -115,12 +115,13 @@ export const usePostStore = defineStore({
         })
     },
     async like(props) {
+      console.log(props)
       await axios
         .post('/like/' + props.post_id + '/' + props.user_id, { props: props })
         .then((response) => {
           console.log(response)
           if (response.status == 201) {
-            this.post.lokes_count = response.data.lokes_count
+            this.post.likes_count = response.data.likes_count
           }
         })
         .catch((error) => {

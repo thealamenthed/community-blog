@@ -34,7 +34,7 @@
       <p class="text-sm text-gray-500">
         {{ post.user.name }}
       </p>
-      <div class="flex">
+      <div class="flex justify-end">
         <a href="#" class="flex items-center mr-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,26 +55,31 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-
-          {{ post.visits_count }}
+          <div class="pl-1">
+            {{ post.visits_count }}
+          </div>
         </a>
-        <a href="#" class="flex items-center mr-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-            />
-          </svg>
-          {{ post.likes_count }}
-        </a>
+        <form @submit.prevent="emitLike" class="flex items-center mr-3">
+          <button type="submit" @click="like" class="flex">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+            <div class="pl-1">
+              {{ post.likes_count }}
+            </div>
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -83,14 +88,31 @@
 <script setup>
 import moment from 'moment'
 import { ref, reactive } from 'vue'
+import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
 import 'lazysizes'
 
 const props = defineProps(['post', 'id', 'likes_count'])
 
-const user = usePostStore()
+const user = useUserStore()
 const store = storeToRefs()
+
+const form = reactive({
+  post_id: props.id,
+  user_id: user.getUser?.id
+})
+
+const emit = defineEmits({
+  like: ({ user_id }) => {
+    if (user_id) return true
+    return false
+  }
+})
+
+const emitLike = () => {
+  emit('like', { post_id: form.post_id, user_id: form.user_id })
+}
 </script>
 
 <style scoped>
