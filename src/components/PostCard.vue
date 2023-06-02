@@ -60,7 +60,7 @@
           </div>
         </a>
         <form @submit.prevent="emitLike" class="flex items-center mr-3">
-          <button :style="styleObject" type="submit" @click="like" class="flex">
+          <button :style="styleObject" type="submit" @click="like, toogleHeart()" class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -76,7 +76,7 @@
               />
             </svg>
             <div class="pl-1">
-              {{ post.likes_count }}
+              {{ count_likes }}
             </div>
           </button>
         </form>
@@ -120,6 +120,13 @@ const styleObject = reactive({
   color: likedByUser ? 'red' : '',
   count_likes: props.likes_count
 })
+
+const count_likes = ref(props.likes_count)
+
+const toogleHeart = () => {
+  styleObject.color = styleObject.color == 'red' ? '' : 'red'
+  count_likes.value = styleObject.color == 'red' ? count_likes.value + 1 : count_likes.value - 1
+}
 </script>
 
 <style scoped>
