@@ -60,7 +60,7 @@
           </div>
         </a>
         <form @submit.prevent="emitLike" class="flex items-center mr-3">
-          <button type="submit" @click="like" class="flex">
+          <button :style="styleObject" type="submit" @click="like" class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -113,6 +113,13 @@ const emit = defineEmits({
 const emitLike = () => {
   emit('like', { post_id: form.post_id, user_id: form.user_id })
 }
+
+const likedByUser = props.post.likes.some((like) => like.user_id === user.getUser?.id)
+
+const styleObject = reactive({
+  color: likedByUser ? 'red' : '',
+  count_likes: props.likes_count
+})
 </script>
 
 <style scoped>
