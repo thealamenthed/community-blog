@@ -33,6 +33,7 @@
       <p class="text-sm text-gray-500">
         Cathégorie :
         <RouterLink
+          @click="getCategory(post.category.slug)"
           :to="{
             name: 'category.show',
             params: { slug: post.category.slug, title: post.category.name }
@@ -133,8 +134,8 @@ import 'lazysizes'
 const props = defineProps(['post', 'id', 'likes_count'])
 
 const user = useUserStore()
-
-const store = storeToRefs()
+const store = usePostStore()
+const { getCategory } = store
 
 const router = useRouter()
 
