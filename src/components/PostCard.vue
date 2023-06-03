@@ -30,10 +30,21 @@
         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
       </p>
 
-      <p class="text-sm text-gray-500">Cathégorie : {{ post.category.name }}</p>
+      <p class="text-sm text-gray-500">
+        Cathégorie :
+        <RouterLink
+          :to="{
+            name: 'category.show',
+            params: { slug: post.category.slug, title: post.category.name }
+          }"
+        >
+          {{ post.category.name }}
+        </RouterLink>
+      </p>
       <p class="text-sm text-gray-500">
         {{ post.user.name }}
       </p>
+
       <div class="flex justify-end">
         <a href="#" class="flex items-center mr-3">
           <svg

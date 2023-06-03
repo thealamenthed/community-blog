@@ -48,6 +48,14 @@ const router = createRouter({
         title: 'Post'
       }
     },
+    {
+      path: '/category/:slug',
+      name: 'category.show',
+      component: () => import('../pages/HomeView.vue'),
+      meta: {
+        title: 'Category'
+      }
+    },
 
     {
       path: '/about',
