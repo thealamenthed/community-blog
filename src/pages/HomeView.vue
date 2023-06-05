@@ -43,6 +43,16 @@
             </p>
             <div>
               <select
+                v-if="route.name == 'category.show' && route.params.slug"
+                v-model="sort"
+                @change="getCategory(route.params.slug, sort), resetResults()"
+              >
+                <option v-for="option in options" :key="option.value" :value="option.value">
+                  {{ option.text }}
+                </option>
+              </select>
+              <select
+                v-else
                 v-model="sort"
                 @change="
                   !route.query.search ? getPosts(sort) : getSearch(route.query.search, sort),
@@ -111,7 +121,7 @@ import { useRoute } from 'vue-router'
 const store = usePostStore()
 
 const { posts, loading, error, posts_count } = storeToRefs(store)
-const { getPosts, getSearch, like } = store
+const { getPosts, getSearch, like, getCategory } = store
 
 const route = useRoute()
 
@@ -123,6 +133,8 @@ const searchPosts = () => {
 
 if (!route.query.search) {
   getPosts()
+} else if (route.name == 'category.show' && route.params.slug) {
+  getCategory(route.params.slug, sort)
 } else {
   getSearch(route.query.search)
 }
