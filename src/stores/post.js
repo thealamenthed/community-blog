@@ -130,6 +130,27 @@ export const usePostStore = defineStore({
             this.$router.push({ name: 'login' })
           }
         })
+    },
+    async getCategory(slug, sort = null) {
+      this.posts = []
+      this.loading = true
+
+      await this.csrf()
+      await axios
+        .get('/category/' + slug + '?sort=' + sort)
+        .then((response) => {
+          console.log(response)
+          this.loading = false
+          if (response.status == 200) {
+            this.posts = response.data.posts
+            this.category = response.data.category
+            this.posts_count = response.data.posts_count
+          }
+        })
+        .catch((error) => {
+          this.loading = false
+          console.log(error)
+        })
     }
   }
 })
