@@ -56,6 +56,15 @@ const router = createRouter({
         title: 'Category'
       }
     },
+    {
+      path: '/create-post',
+      name: 'post.create',
+      component: () => import('../pages/CreatePostView.vue'),
+      meta: {
+        title: 'Create a new post',
+        requiresAuth: true
+      }
+    },
 
     {
       path: '/about',
