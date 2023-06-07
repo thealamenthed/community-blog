@@ -12,11 +12,130 @@
   </div>
 
   <!-- ====== Blog Section Start -->
+
   <section class="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
     <div class="container mx-auto">
       <div class="flex flex-wrap justify-center -mx-4">
         <div class="w-full px-4">
-          <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20"></div>
+          <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
+            <form action="/post/store" id="form" method="post" enctype="multipart/form-data">
+              <div class="space-y-12 sm:space-y-16">
+                <div>
+                  <h2 class="text-base font-semibold leading-7 text-gray-900">
+                    Ajouter un nouveau post
+                  </h2>
+                  <p class="max-w-2xl mt-1 text-sm leading-6 text-gray-600">
+                    This information will be displayed publicly so be careful what you share.
+                  </p>
+
+                  <div
+                    class="pb-12 mt-10 space-y-8 border-b border-gray-900/10 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0"
+                  >
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                      <label
+                        for="title"
+                        class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                        >Titre</label
+                      >
+                      <div class="mt-2 sm:col-span-2 sm:mt-0">
+                        <div
+                          class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
+                        >
+                          <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 px-2"
+                            placeholder="Titre"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                      <label
+                        for="content"
+                        class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                        >Contenu</label
+                      >
+                      <div class="mt-2 sm:col-span-2 sm:mt-0">
+                        <textarea
+                          id="content"
+                          name="content"
+                          rows="3"
+                          placeholder="Contenu du post"
+                          class="block m-2 w-full max-w-2xl rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                      <label
+                        for="cover-photo"
+                        class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                        >Ajouter une image</label
+                      >
+                      <div class="mt-2 sm:col-span-2 sm:mt-0">
+                        <div
+                          class="flex justify-center max-w-2xl px-6 py-10 border border-dashed rounded-lg border-gray-900/25"
+                        >
+                          <div class="text-center">
+                            <PhotoIcon class="w-12 h-12 mx-auto text-gray-300" aria-hidden="true" />
+                            <div class="flex mt-4 text-sm leading-6 text-gray-600">
+                              <label
+                                for="file"
+                                class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                              >
+                                <span>Ajouter une image</span>
+                                <input id="file" name="file" type="file" class="sr-only" />
+                              </label>
+                              <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:py-6">
+                      <label
+                        for="category"
+                        class="block text-sm font-medium leading-6 text-gray-900"
+                        >Catégorie</label
+                      >
+                      <div class="mt-2 sm:col-span-2 sm:mt-0">
+                        <div>
+                          <select
+                            id="category"
+                            name="category_id"
+                            placeholder="Select catégorie"
+                            class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          >
+                            <option>United States</option>
+                            <option selected="">Canada</option>
+                            <option>Mexico</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-end px-4 py-4 border-t gap-x-6 border-gray-900/10 sm:px-8"
+              >
+                <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -24,4 +143,6 @@
   <!-- ====== Blog Section End -->
 </template>
 
-<script setup></script>
+<script setup>
+import { PhotoIcon } from '@heroicons/vue/24/solid'
+</script>
