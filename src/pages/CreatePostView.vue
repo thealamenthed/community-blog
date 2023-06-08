@@ -19,6 +19,7 @@
         <div class="w-full px-4">
           <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
             <form action="/post/store" id="form" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="user_id" v-model="user_id" />
               <div class="space-y-12 sm:space-y-16">
                 <div>
                   <h2 class="text-base font-semibold leading-7 text-gray-900">
@@ -106,14 +107,17 @@
                       <div class="mt-2 sm:col-span-2 sm:mt-0">
                         <div>
                           <select
+                            data-te-select-init
+                            data-te-select-placeholder="Example placeholder"
+                            v-model="category_id"
                             id="category"
                             name="category_id"
-                            placeholder="Select catégorie"
                             class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           >
-                            <option>United States</option>
-                            <option selected="">Canada</option>
-                            <option>Mexico</option>
+                            <option value="" disabled selected>Choose a category</option>
+                            <option v-for="cat in categories" :value="cat.id" :key="cat.id">
+                              {{ cat.name }}
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -145,4 +149,20 @@
 
 <script setup>
 import { PhotoIcon } from '@heroicons/vue/24/solid'
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+import { usePostStore } from '@/stores/post'
+import { storeToRefs } from 'pinia'
+
+const user = useUserStore()
+const store = usePostStore()
+const router = useRouter()
+
+const { categories } = storeToRefs(store)
+const { getCategories } = store
+const category_id = ref(0)
+const user_id = ref(user.getUser?.id)
+
+getCategories()
 </script>

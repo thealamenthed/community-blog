@@ -151,6 +151,23 @@ export const usePostStore = defineStore({
           this.loading = false
           console.log(error)
         })
+    },
+    async getCategories() {
+      this.categories = []
+
+      await this.csrf()
+      await axios
+        .get('/categories')
+        .then((response) => {
+          console.log(response)
+          if (response.status == 200) {
+            this.categories = response.data.categories
+            console.log(this.categories)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   }
 })
