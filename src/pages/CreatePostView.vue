@@ -18,7 +18,13 @@
       <div class="flex flex-wrap justify-center -mx-4">
         <div class="w-full px-4">
           <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
-            <form action="/post/store" id="form" method="post" enctype="multipart/form-data">
+            <form
+              @submit.prevent="onSubmit"
+              action="/post/store"
+              id="form"
+              method="post"
+              enctype="multipart/form-data"
+            >
               <input type="hidden" name="user_id" v-model="user_id" />
               <div class="space-y-12 sm:space-y-16">
                 <div>
@@ -43,6 +49,7 @@
                           class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
                         >
                           <input
+                            v-model="title"
                             type="text"
                             name="title"
                             id="title"
@@ -61,6 +68,7 @@
                       >
                       <div class="mt-2 sm:col-span-2 sm:mt-0">
                         <textarea
+                          v-model="content"
                           id="content"
                           name="content"
                           rows="3"
@@ -88,7 +96,13 @@
                                 class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                               >
                                 <span>Ajouter une image</span>
-                                <input id="file" name="file" type="file" class="sr-only" />
+                                <input
+                                  ref="file"
+                                  id="file"
+                                  name="file"
+                                  type="file"
+                                  class="sr-only"
+                                />
                               </label>
                               <p class="pl-1">or drag and drop</p>
                             </div>
@@ -154,6 +168,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
+import axios from 'axios'
 
 const user = useUserStore()
 const store = usePostStore()
@@ -161,8 +176,36 @@ const router = useRouter()
 
 const { categories } = storeToRefs(store)
 const { getCategories } = store
-const category_id = ref(0)
-const user_id = ref(user.getUser?.id)
 
 getCategories()
+
+const title = ref('')
+const content = ref('')
+const category_id = ref(0)
+const user_id = ref(user.getUser?.id)
+const file = ref(null)
+
+const onSubmit = async () => {
+  alert('Envoyé')
+  let formData = new FormData()
+  formData.append('file', file.value)
+  formData.append('title', title.value)
+  formData.append('content', content.value)
+  formData.append('title', title.value)
+  formData.append('category_id', category_id.value)
+  formData.append('user_id', user_id.value)
+
+  await axios
+    .post('/post/store', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8'
+      }
+    })
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 </script>
