@@ -99,7 +99,7 @@
         <figcaption class="flex mt-6 gap-x-4">
           <img
             class="flex-none w-6 h-6 rounded-full bg-gray-50"
-            :style="{ backgroundImage: 'url(' + post.user.avatar.thumbnail_url + ')' }"
+            :style="{ backgroundImage: 'url(' + post?.user?.avatar?.thumbnail_url + ')' }"
             src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             alt=""
           />

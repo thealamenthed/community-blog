@@ -18,6 +18,7 @@
       <div class="flex flex-wrap justify-center -mx-4">
         <div class="w-full px-4">
           <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
+            <ErrorMessages v-if="errors.errors.length" :errors="errors.errors" />
             <form
               @submit.prevent="onSubmit"
               action="/post/store"
@@ -193,6 +194,7 @@ import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
 import axios from 'axios'
+import ErrorMessages from '@/components/ErrorMessages.vue'
 
 const user = useUserStore()
 const store = usePostStore()
@@ -232,7 +234,12 @@ const onChangeCategory = (event) => {
   console.log(category_id.value)
 }
 
+const errors = reactive({
+  errors: []
+})
+
 const onSubmit = async () => {
+  errors.errors = []
   let formData = new FormData()
   formData.append('file', fileToSend.value)
   formData.append('title', title.value)
@@ -267,6 +274,12 @@ const onSubmit = async () => {
     })
     .catch((error) => {
       console.log(error)
+      if (error.response.status === 422) {
+        for (const key in error.response.data.errors) {
+          errors.errors.push(error.response.data.errors[key][0] + ' ')
+        }
+        console.log(errors.errors)
+      }
     })
 }
 </script>
