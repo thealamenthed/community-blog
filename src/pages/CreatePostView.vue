@@ -114,10 +114,23 @@
                                     height="150"
                                   />
                                 </div>
+                                <div>
+                                  <div
+                                    v-if="showProgression"
+                                    class="mb-2 overflow-hidden bg-gray-200 rounded-full"
+                                  >
+                                    <div
+                                      class="h-2 bg-indigo-600 rounded-full"
+                                      :style="'width:' + progression + '%'"
+                                    ></div>
+                                  </div>
+                                </div>
                               </label>
-                              <p class="pl-1">or drag and drop</p>
                             </div>
-                            <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+
+                            <p class="text-xs leading-5 text-center text-gray-600">
+                              PNG, JPG, GIF up to 10MB
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -199,6 +212,9 @@ const file = ref(null)
 const imageUrl = ref(null)
 const fileToSend = ref(null)
 
+const progression = ref(0)
+const showProgression = ref(false)
+
 const selectFile = (event) => {
   file.value = fileToSend.value = event.target.files[0]
   console.log(file.value)
@@ -229,6 +245,21 @@ const onSubmit = async () => {
     .post('/post/store', formData, {
       headers: {
         'Content-Type': 'multipart/form-data; charset=utf-8'
+      },
+      onUploadProgress: (e) => {
+        if (fileToSend.value && title.value && content.value && category_id.value) {
+          showProgression.value = true
+          let percentCompleted = Math.round((e.loaded * 100) / e.total)
+          console.log(percentCompleted)
+          progression.value = percentCompleted
+          if (percentCompleted === 100) {
+            setTimeout(() => {
+              progression.value = 0
+              showProgression.value = false
+              router.push({ name: 'home' })
+            }, 2000)
+          }
+        }
       }
     })
     .then((response) => {
