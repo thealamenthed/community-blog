@@ -104,6 +104,16 @@
                                   type="file"
                                   class="sr-only"
                                 />
+
+                                <div v-if="imageUrl" class="mb-3">
+                                  <img
+                                    :src="imageUrl"
+                                    alt="image"
+                                    class=""
+                                    width="150"
+                                    height="150"
+                                  />
+                                </div>
                               </label>
                               <p class="pl-1">or drag and drop</p>
                             </div>
@@ -186,9 +196,18 @@ const category_id = ref(0)
 const user_id = ref(user.getUser?.id)
 const file = ref(null)
 
+const imageUrl = ref(null)
+const fileToSend = ref(null)
+
 const selectFile = (event) => {
-  file.value = event.target.files[0]
+  file.value = fileToSend.value = event.target.files[0]
   console.log(file.value)
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    imageUrl.value = e.target.result
+    console.log(e.target.result)
+  }
+  reader.readAsDataURL(event.target.files[0])
 }
 
 const onChangeCategory = (event) => {
@@ -199,7 +218,7 @@ const onChangeCategory = (event) => {
 
 const onSubmit = async () => {
   let formData = new FormData()
-  formData.append('file', file.value)
+  formData.append('file', fileToSend.value)
   formData.append('title', title.value)
   formData.append('content', content.value)
   formData.append('title', title.value)
