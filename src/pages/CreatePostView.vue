@@ -6,7 +6,7 @@
       <div
         class="flex items-center justify-center max-w-2xl p-16 mx-auto my-16 bg-white rounded-lg"
       >
-        <h1 class="text-2xl font-medium">{{ title }}</h1>
+        <h1 class="text-2xl font-medium">Ajouter un nouveau post</h1>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
               <div class="space-y-12 sm:space-y-16">
                 <div>
                   <h2 class="text-base font-semibold leading-7 text-gray-900">
-                    Ajouter un nouveau post
+                    Lorem ipsum, reprehenderit qui expedita.
                   </h2>
                   <p class="max-w-2xl mt-1 text-sm leading-6 text-gray-600">
                     This information will be displayed publicly so be careful what you share.
@@ -97,6 +97,7 @@
                               >
                                 <span>Ajouter une image</span>
                                 <input
+                                  @change="selectFile($event)"
                                   ref="file"
                                   id="file"
                                   name="file"
@@ -121,8 +122,8 @@
                       <div class="mt-2 sm:col-span-2 sm:mt-0">
                         <div>
                           <select
-                            data-te-select-init
-                            data-te-select-placeholder="Example placeholder"
+                            @change="onChangeCategory($event)"
+                            placeholder="Example placeholder"
                             v-model="category_id"
                             id="category"
                             name="category_id"
@@ -185,8 +186,18 @@ const category_id = ref(0)
 const user_id = ref(user.getUser?.id)
 const file = ref(null)
 
+const selectFile = (event) => {
+  file.value = event.target.files[0]
+  console.log(file.value)
+}
+
+const onChangeCategory = (event) => {
+  console.log(event.target.value)
+  category_id.value = event.target.value
+  console.log(category_id.value)
+}
+
 const onSubmit = async () => {
-  alert('Envoyé')
   let formData = new FormData()
   formData.append('file', file.value)
   formData.append('title', title.value)
