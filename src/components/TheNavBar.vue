@@ -11,21 +11,21 @@
         <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
           <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
             <!-- logo -->
-            
+
             <div class="flex items-center flex-shrink-0">
               <a class="flex items-center" href="/">
                 <HomeIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Home
               </a>
             </div>
-            
+
             <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
               <a class="flex items-center" href="/register">
                 <UserPlusIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Register
               </a>
             </div>
-            
+
             <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
               <a class="flex items-center" href="/login">
                 <ArrowLongUpIcon class="block w-6 h-6 m-2 text-slate-500" />
@@ -39,12 +39,31 @@
                 Dashboard
               </a>
             </div>
+            <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
+              <a class="flex items-center m-3" href="/create-post">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+                Poster
+              </a>
+            </div>
 
-            <div 
-            v-if="user.loggedIn"
-            @click.prevent="user.logout" 
-              
-              class="flex items-center flex-shrink-0">
+            <div
+              v-if="user.loggedIn"
+              @click.prevent="user.logout"
+              class="flex items-center flex-shrink-0"
+            >
               <a class="flex items-center" href=".">
                 <XMarkIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Logout
@@ -123,7 +142,6 @@ import {
 import { useUserStore } from '@/stores/user'
 
 const user = useUserStore()
-
 
 // const user = {
 //   name: 'Chelsea Hagon',

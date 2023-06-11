@@ -3,7 +3,7 @@
     <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
       <div class="mb-8 overflow-hidden rounded">
         <img
-          :data-src="post.photo.thumbnail_url"
+          :data-src="post.photo.thumbnail_path"
           :alt="post.title"
           async="decoding"
           class="w-full lazyload"
@@ -18,20 +18,25 @@
       </span>
 
       <h3>
-        <a
-          href="#"
+        <RouterLink
+          :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }"
           class="inline-block mb-4 text-xl font-semibold text-dark hover:text-primary sm:text-2xl lg:text-xl xl:text-2xl"
         >
-          Meet AutoManage, the best AI management tools
-        </a>
+          {{ post.title }}
+        </RouterLink>
       </h3>
 
-      <p class="text-base text-body-color">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      <p>
+        <RouterLink
+          :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }"
+          class="text-base text-body-color"
+        >
+          {{ post.content }}
+        </RouterLink>
       </p>
 
       <p class="text-sm text-gray-500">
-        Cathégorie :
+        Catégorie :
         <RouterLink
           @click="getCategory(post.category.slug)"
           :to="{
@@ -132,6 +137,7 @@ import { storeToRefs } from 'pinia'
 import 'lazysizes'
 
 const props = defineProps(['post', 'id', 'likes_count'])
+const urlApi = 'https://simpledev.one/'
 
 const user = useUserStore()
 const store = usePostStore()
