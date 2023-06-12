@@ -1,5 +1,6 @@
 <template>
   <div class="m-10 space-y-10 divide-y divide-gray-900/10">
+    <h1 class="text-lg">{{ title }} {{ name }}</h1>
     <div class="grid grid-cols-1 pt-10 gap-x-8 gap-y-8 md:grid-cols-4">
       <div class="px-4 sm:px-0">
         <h2 class="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
@@ -24,11 +25,12 @@
               >
               <div class="mt-2">
                 <input
+                  v-model="name"
                   type="text"
                   name="name"
                   id="name"
                   autocomplete="name"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -39,11 +41,12 @@
               >
               <div class="mt-2">
                 <input
+                  v-model="email"
                   id="email"
                   name="email"
                   type="email"
                   autocomplete="email"
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -130,8 +133,33 @@
 </template>
 
 <script setup>
-import { useUserStore } from '@/stores/user'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/24/solid'
 
+import { useUserStore } from '@/stores/user'
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import ErrorMessages from '@/components/ErrorMessages.vue'
+import { DialogTitle } from '@headlessui/vue'
+
+const router = useRouter()
 const user = useUserStore()
+
+const file = ref(null)
+const name = ref(user.getUser?.name)
+const email = ref(user.getUser?.email)
+const title = ref('')
+const imageUrl = ref(user.getUser?.avatar?.thumbnail_url)
+const fileToSend = ref(null)
+
+const progression = ref(0)
+const showProgression = ref(false)
+
+const errors = reactive({
+  errors: []
+})
+
+onMounted(() => {
+  title.value = document.querySelector('head title').innerHTML
+})
 </script>
