@@ -19,6 +19,7 @@
       >
         <fieldset class="form-fieldset">
           <div class="px-4 py-6 sm:p-8">
+            <ErrorMessages v-if="errors.errors.length" :errors="errors.errors" class="mb-3" />
             <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div class="sm:col-span-3">
                 <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900"
@@ -220,6 +221,10 @@ const onSubmit = async () => {
         for (const key in error.response.data.errors) {
           errors.errors.push(error.response.data.errors[key][0] + ' ')
         }
+        console.log(errors.errors)
+      }
+      if (error.response.status === 500) {
+        errors.errors.push(error.response.data.message)
         console.log(errors.errors)
       }
     })
