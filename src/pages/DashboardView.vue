@@ -148,27 +148,23 @@
 </template>
 
 <script setup>
-import { PhotoIcon, UserCircleIcon } from '@heroicons/vue/24/solid'
-
-import { useUserStore } from '@/stores/user'
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 import axios from 'axios'
 import ErrorMessages from '@/components/ErrorMessages.vue'
+// import Swal from 'sweetalert2'
 
 const router = useRouter()
 const user = useUserStore()
-
 const file = ref(null)
 const name = ref(user.getUser?.name)
 const email = ref(user.getUser?.email)
-const title = ref('')
 const imageUrl = ref(user.getUser?.avatar?.thumbnail_url)
 const fileToSend = ref(null)
 
 const progression = ref(0)
 const showProgression = ref(false)
-
 const errors = reactive({
   errors: []
 })
@@ -184,6 +180,52 @@ const selectFile = (event) => {
   reader.readAsDataURL(event.target.files[0])
 }
 
+const onSubmit = async () => {
+  errors.errors = []
+  await axios.get('/sanctum/csrf-cookie')
+  let formData = new FormData()
+  formData.append('file', fileToSend.value)
+  formData.append('name', name.value)
+  formData.append('email', email.value)
+
+  await axios
+    .post('/user/update/' + user.getUser?.id, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8;'
+      },
+      onUploadProgress: (e) => {
+        if (fileToSend.value && name.value && email.value) {
+          showProgression.value = true
+          let percentCompleted = Math.round((e.loaded * 100) / e.total)
+          console.log(percentCompleted)
+          progression.value = percentCompleted
+          if (percentCompleted === 100) {
+            setTimeout(() => {
+              progression.value = 0
+              showProgression.value = false
+              // router.push({name: 'home'})
+            }, 2000)
+          }
+        }
+      }
+    })
+    .then((response) => {
+      console.log(response)
+      localStorage.setItem('user', JSON.stringify(response.data.user))
+      router.go(0)
+    })
+    .catch((error) => {
+      console.log(error)
+      if (error.response.status === 422) {
+        for (const key in error.response.data.errors) {
+          errors.errors.push(error.response.data.errors[key][0] + ' ')
+        }
+        console.log(errors.errors)
+      }
+    })
+}
+
+const title = ref('')
 onMounted(() => {
   title.value = document.querySelector('head title').innerHTML
 })
