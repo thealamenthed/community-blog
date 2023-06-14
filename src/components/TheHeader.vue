@@ -1,58 +1,103 @@
 <template>
-    <div>
-  <header>
-     <nav
-        class="flex flex-wrap items-center justify-between w-full px-4 py-4 text-lg text-gray-700 bg-white md:py-0"
-      >
-       <div>
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-           <HomeIcon class="w-5 h-5 text-gray-400" aria-hidden="true" /> 
-        </div>
-        </div>
-       
-         <svg
-            xmlns="http://www.w3.org/2000/svg"
-            id="menu-button"
-            class="block w-6 h-6 cursor-pointer md:hidden"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-       
-       <div class="hidden w-full md:flex md:items-center md:w-auto" id="menu">
-          <ul
-            class="pt-4 text-base text-gray-700 md:flex md:justify-between md:pt-0"
-          >
-            <li>
+  <header class="bg-white">
+    <nav
+      class="flex items-center justify-between p-6 mx-auto max-w-7xl lg:px-8"
+      aria-label="Global"
+    >
+      <div class="flex lg:flex-1">
+        <a href="#" class="-m-1.5 p-1.5">
+          <span class="sr-only">Your Company</span>
+          <img
+            class="w-auto h-8"
+            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            alt=""
+          />
+        </a>
+      </div>
 
-              <a class="block py-2 md:p-4 hover:text-purple-400" href="#"
-                >Accueil</a
-              >
-            </li>
-            <li>
-              <a class="block py-2 md:p-4 hover:text-purple-400" href="#"
-                >À propos</a
-              >
-            </li>
-            <li>
-              <a class="block py-2 md:p-4 hover:text-purple-400" href="#"
-                >Blog</a
-              >
-            </li>
-          </ul>
-        </div>
+      <div class="flex lg:hidden">
+        <button
+          type="button"
+          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          @click="mobileMenuOpen = true"
+        >
+          <span class="sr-only">Open main menu</span>
+          <Bars3Icon class="w-6 h-6" aria-hidden="true" />
+        </button>
+      </div>
+
+      <div v-if="user.loggedIn" class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="#" class="flex-shrink-0 block group">
+          <div class="flex items-center">
+            <div>
+              <span
+                v-if="src"
+                class="inline-block rounded-full h-9 w-9"
+                :style="{ backgroundImage: 'url(' + user.getUser?.avatar?.thumbnail_url + ')' }"
+              />
+              <span v-else class="inline-block bg-purple-500 rounded-full h-9 w-9" />
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                {{ user.getUser?.name }}
+              </p>
+              <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                View profile
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
     </nav>
+
+    <!-- menu burger -->
+
+    <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
+      <div class="fixed inset-0 z-10" />
+      <DialogPanel
+        class="fixed inset-y-0 right-0 z-10 w-full px-6 py-6 overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+      >
+        <div class="flex items-center justify-between">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">Your Company</span>
+            <img
+              class="w-auto h-8"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt=""
+            />
+          </a>
+          <button
+            type="button"
+            class="-m-2.5 rounded-md p-2.5 text-gray-700"
+            @click="mobileMenuOpen = false"
+          >
+            <span class="sr-only">Close menu</span>
+            <XMarkIcon class="w-6 h-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div class="flow-root mt-6">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="py-6">
+              <a
+                href="#"
+                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >Log in</a
+              >
+            </div>
+          </div>
+        </div>
+      </DialogPanel>
+    </Dialog>
   </header>
-</div>
 </template>
 
-<script setup lang="ts">
-import { HomeIcon } from "@heroicons/vue/24/outline"
+<script setup>
+import { ref } from 'vue'
+import { Dialog, DialogPanel } from '@headlessui/vue'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { useUserStore } from '@/stores/user'
+
+const user = useUserStore()
+
+const mobileMenuOpen = ref(false)
 </script>
