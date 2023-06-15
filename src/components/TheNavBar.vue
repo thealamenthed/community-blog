@@ -12,35 +12,34 @@
           <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
             <!-- logo -->
 
-            <div class="flex items-center flex-shrink-0">
+            <div class="flex m-3 text-sm font-semibold leading-6 text-gray-900">
               <a class="flex items-center" href="/">
-                <HomeIcon class="block w-6 h-6 m-2 text-slate-500" />
+                <HomeIcon class="block w-6 h-6 m-2 text-gray-900" />
                 Home
               </a>
             </div>
 
             <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
-              <a class="flex items-center" href="/register">
+              <a class="flex m-3 text-sm font-semibold leading-6 text-gray-900" href="/register">
                 <UserPlusIcon class="block w-6 h-6 m-2 text-slate-500" />
                 Register
               </a>
             </div>
 
             <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
-              <a class="flex items-center" href="/login">
-                <ArrowLongUpIcon class="block w-6 h-6 m-2 text-slate-500" />
-                Login
-              </a>
+              <a href="#" class="text-sm font-semibold leading-6 text-gray-900"
+                >Log in <span aria-hidden="true">&rarr;</span></a
+              >
             </div>
 
             <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
-              <a class="flex items-center" href="/dashboard">
-                <XMarkIcon class="block w-6 h-6 m-2 text-slate-500" />
+              <a class="flex m-3 text-sm font-semibold leading-6 text-gray-900" href="/dashboard">
+                <XMarkIcon class="w-6 h-6 text-gray-900" />
                 Dashboard
               </a>
             </div>
             <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
-              <a class="flex items-center m-3" href="/create-post">
+              <a class="flex m-3 text-sm font-semibold leading-6 text-gray-900" href="/create-post">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -64,10 +63,7 @@
               @click.prevent="user.logout"
               class="flex items-center flex-shrink-0"
             >
-              <a class="flex items-center" href=".">
-                <XMarkIcon class="block w-6 h-6 m-2 text-slate-500" />
-                Logout
-              </a>
+              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log out</a>
             </div>
           </div>
         </div>
