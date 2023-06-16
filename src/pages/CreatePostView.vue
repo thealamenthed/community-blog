@@ -240,6 +240,7 @@ const errors = reactive({
 
 const onSubmit = async () => {
   errors.errors = []
+  await axios.get('/sanctum/csrf-cookie')
   let formData = new FormData()
   formData.append('file', fileToSend.value)
   formData.append('title', title.value)

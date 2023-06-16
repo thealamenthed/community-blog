@@ -8,7 +8,7 @@
       </div>
 
       <form
-        @submit.prevent=""
+        @submit.prevent="onSubmit"
         action="."
         id="form"
         method="post"
@@ -28,7 +28,7 @@
             <div class="mt-4">
               <BaseInput
                 v-model="form.password"
-                label="Password"
+                label="New password"
                 type="password"
                 class="block w-full rounded-md border-0 py-1.5 px-4 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -78,8 +78,39 @@ const form = reactive({
   password: '',
   password_confirmation: ''
 })
+const errors = reactive({
+  errors: []
+})
 
-const submit = () => {
-  user.login(form)
+const onSubmit = async () => {
+  errors.errors = []
+  await axios.get('/sanctum/csrf-cookie')
+
+  await axios
+    .post('/user/password/' + user.getUser?.id, form)
+    .then((response) => {
+      console.log(response)
+      if (response.data.success) {
+        alert('Password mis à jour')
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      if (error.response.data.error) {
+        //mauvais password actuel
+        // errors.errors.push(error.response.data.error);
+        alert(error.response.data.error)
+      }
+      if (error.response.status === 422) {
+        for (const key in error.response.data.errors) {
+          errors.errors.push(error.response.data.errors[key][0] + ' ')
+        }
+        console.log(errors.errors)
+      }
+      if (error.response.status === 500) {
+        errors.errors.push(error.response.data.message)
+        console.log(errors.errors)
+      }
+    })
 }
 </script>
