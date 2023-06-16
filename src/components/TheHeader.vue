@@ -27,7 +27,7 @@
       </div>
 
       <div v-if="user.loggedIn" class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="#" class="flex-shrink-0 block group">
+        <a href="/dashboard" class="flex-shrink-0 block group">
           <div class="flex items-center">
             <div>
               <span
