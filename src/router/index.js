@@ -65,6 +65,15 @@ const router = createRouter({
         requiresAuth: true
       }
     },
+    {
+      path: '/password-update',
+      name: 'password.update',
+      component: () => import('../pages/UpdatePasswordView.vue'),
+      meta: {
+        title: 'Mise à jour de mot de passe',
+        requiresAuth: true
+      }
+    },
 
     {
       path: '/about',
