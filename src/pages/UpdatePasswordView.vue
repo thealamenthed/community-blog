@@ -16,7 +16,7 @@
       >
         <fieldset class="form-fieldset">
           <div class="px-4 py-6 sm:p-8">
-            <!-- <ErrorMessages v-if="errors.errors.length" :errors="errors.errors" class="mb-3" /> -->
+            <ErrorMessages v-if="errors.errors.length" :errors="errors.errors" class="mb-3" />
             <div class="mt-4">
               <BaseInput
                 v-model="form.current_password"
@@ -98,8 +98,7 @@ const onSubmit = async () => {
       console.log(error)
       if (error.response.data.error) {
         //mauvais password actuel
-        // errors.errors.push(error.response.data.error);
-        alert(error.response.data.error)
+        errors.errors.push(error.response.data.error)
       }
       if (error.response.status === 422) {
         for (const key in error.response.data.errors) {
