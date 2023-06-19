@@ -33,12 +33,6 @@
             </div>
 
             <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
-              <a class="flex m-3 text-sm font-semibold leading-6 text-gray-900" href="/dashboard">
-                <XMarkIcon class="w-6 h-6 text-gray-900" />
-                Dashboard
-              </a>
-            </div>
-            <div v-if="user.loggedIn" class="flex items-center flex-shrink-0">
               <a class="flex m-3 text-sm font-semibold leading-6 text-gray-900" href="/create-post">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

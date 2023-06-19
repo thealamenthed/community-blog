@@ -142,6 +142,8 @@
           >
             Save
           </button>
+
+          <RouterLink :to="{ name: 'password.update' }">Changer de mot de passe</RouterLink>
         </div>
       </form>
     </div>
