@@ -69,6 +69,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const user = useUserStore()
 const router = useRouter()
@@ -91,14 +92,29 @@ const onSubmit = async () => {
     .then((response) => {
       console.log(response)
       if (response.data.success) {
-        alert('Password mis à jour')
+        Swal.fire({
+          icon: 'success',
+          title: 'Succès',
+          text: response.data.message,
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.isConfirmed) {
+            router.go(0)
+          }
+        })
       }
     })
     .catch((error) => {
       console.log(error)
       if (error.response.data.error) {
         //mauvais password actuel
-        errors.errors.push(error.response.data.error)
+        // errors.errors.push(error.response.data.error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: error.response.data.error,
+          allowOutsideClick: false
+        })
       }
       if (error.response.status === 422) {
         for (const key in error.response.data.errors) {
@@ -109,6 +125,15 @@ const onSubmit = async () => {
       if (error.response.status === 500) {
         errors.errors.push(error.response.data.message)
         console.log(errors.errors)
+      }
+
+      if (errors.errors.length) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          html: errors.errors.join('<br>'),
+          allowOutsideClick: false
+        })
       }
     })
 }
