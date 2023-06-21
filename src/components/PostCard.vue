@@ -50,6 +50,15 @@
       <p class="text-sm text-gray-500">
         {{ post.user.name }}
       </p>
+      <div v-if="user.loggedIn && user.getUser?.id == post.user_id">
+        <button
+          @click.prevent=""
+          type="button"
+          className="rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Suppimer
+        </button>
+      </div>
 
       <div class="flex justify-end">
         <a href="#" class="flex items-center mr-3">
