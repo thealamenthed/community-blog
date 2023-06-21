@@ -190,7 +190,18 @@ const redirectToLogin = () => {
 }
 
 const deletePost = () => {
-  store.deletePost(props.post.id, props.post.user_id)
+  Swal.fire({
+    icon: 'warning',
+    title: 'Attention',
+    text: 'Confirmez-vous la suppression de ce post ?',
+    allowOutsideClick: false,
+    cancelButtonText: 'Annuler',
+    showCancelButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      store.deletePost(props.post.id, props.post.user_id)
+    }
+  })
 }
 </script>
 
