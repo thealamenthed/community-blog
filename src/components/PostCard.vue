@@ -52,7 +52,7 @@
       </p>
       <div v-if="user.loggedIn && user.getUser?.id == post.user_id">
         <button
-          @click.prevent=""
+          @click.prevent="deletePost"
           type="button"
           className="rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
@@ -142,11 +142,10 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
-import { storeToRefs } from 'pinia'
+import Swal from 'sweetalert2'
 import 'lazysizes'
 
 const props = defineProps(['post', 'id', 'likes_count'])
-const urlApi = 'https://simpledev.one/'
 
 const user = useUserStore()
 const store = usePostStore()
@@ -188,6 +187,10 @@ const redirectToLogin = () => {
   if (user.userLoggedIn === undefined) {
     router.push({ name: 'login' })
   }
+}
+
+const deletePost = () => {
+  store.deletePost(props.post.id, props.post.user_id)
 }
 </script>
 
