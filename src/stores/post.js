@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const usePostStore = defineStore({
   id: 'post',
@@ -163,6 +164,29 @@ export const usePostStore = defineStore({
           if (response.status == 200) {
             this.categories = response.data.categories
             console.log(this.categories)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    async deletePost(post_id, user_id) {
+      await this.csrf()
+      await axios
+        .get('/post/destroy/' + post_id + '/' + user_id)
+        .then((response) => {
+          console.log(response)
+          if (response.status === 200) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Succès',
+              text: response.data.message,
+              allowOutsideClick: false
+            }).then((result) => {
+              if (result.value) {
+                this.$router.go(0)
+              }
+            })
           }
         })
         .catch((error) => {
