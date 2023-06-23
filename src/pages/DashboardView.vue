@@ -127,23 +127,34 @@
                 </div>
               </div>
             </div>
+            <div
+              class="flex items-center justify-start px-4 py-4 border-t gap-x-6 border-gray-900/10 sm:px-8"
+            >
+              <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Save
+              </button>
+
+              <RouterLink :to="{ name: 'password.update' }">Changer de mot de passe</RouterLink>
+            </div>
           </div>
         </fieldset>
 
         <div
           class="flex items-center justify-end px-4 py-4 border-t gap-x-6 border-gray-900/10 sm:px-8"
         >
-          <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
-            Cancel
-          </button>
           <button
+            @click.prevent="deleteUser()"
             type="submit"
-            class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
-            Save
+            Supprimer le compte
           </button>
-
-          <RouterLink :to="{ name: 'password.update' }">Changer de mot de passe</RouterLink>
         </div>
       </form>
     </div>
@@ -156,6 +167,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import axios from 'axios'
 import ErrorMessages from '@/components/ErrorMessages.vue'
+import Swal from 'sweetalert2'
 // import Swal from 'sweetalert2'
 
 const router = useRouter()
@@ -230,6 +242,21 @@ const onSubmit = async () => {
         console.log(errors.errors)
       }
     })
+}
+
+const deleteUser = async () => {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Attention',
+    text: 'Voulez-vous vraiment supprimer votre compte ?',
+    allowOutsideClick: false,
+    showCancelButton: true,
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      user.deleteUser()
+    }
+  })
 }
 
 const title = ref('')

@@ -107,7 +107,7 @@ export const useUserStore = defineStore({
     async deleteUser() {
       await this.csrf()
       await axios
-        .delete('/user/destory/' + this.getUser.id)
+        .delete('/user/destroy/' + this.getUser.id)
         .then((response) => {
           console.log(response)
           if (response == 200) {
