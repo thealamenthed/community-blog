@@ -150,7 +150,6 @@
         >
           <button
             @click.prevent="deleteUser()"
-            type="submit"
             class="px-3 py-2 text-sm font-semibold text-white bg-red-600 rounded-md shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
             Supprimer le compte

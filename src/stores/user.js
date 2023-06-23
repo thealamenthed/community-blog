@@ -109,12 +109,11 @@ export const useUserStore = defineStore({
       await axios
         .delete('/user/destroy/' + this.getUser.id)
         .then((response) => {
-          console.log(response)
-          if (response == 200) {
+          if (response.status == 200) {
             this.token = null
             localStorage.clear()
             this.$reset()
-            this.$router.push({ name: 'login' })
+            this.$router.push({ name: 'register' })
           }
         })
         .catch((error) => {

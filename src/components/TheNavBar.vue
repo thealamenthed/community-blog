@@ -57,7 +57,7 @@
               @click.prevent="user.logout"
               class="flex items-center flex-shrink-0"
             >
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log out</a>
+              <a href="." class="text-sm font-semibold leading-6 text-gray-900">Log out</a>
             </div>
           </div>
         </div>
