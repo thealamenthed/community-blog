@@ -27,7 +27,7 @@
             </div>
 
             <div v-if="!user.loggedIn" class="flex items-center flex-shrink-0">
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900"
+              <a href="login" class="text-sm font-semibold leading-6 text-gray-900"
                 >Log in <span aria-hidden="true">&rarr;</span></a
               >
             </div>

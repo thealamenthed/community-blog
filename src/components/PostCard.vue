@@ -50,11 +50,18 @@
       <p class="text-sm text-gray-500">
         {{ post.user.name }}
       </p>
-      <div v-if="user.loggedIn && user.getUser?.id == post.user_id">
+      <div class="flex" v-if="user.loggedIn && user.getUser?.id == post.user_id">
+        <button
+          @click.prevent="toggleModal"
+          type="button"
+          className="mr-3 rounded bg-blue-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Editer
+        </button>
         <button
           @click.prevent="deletePost"
           type="button"
-          className="rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className=" rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Suppimer
         </button>
@@ -132,6 +139,66 @@
           </button>
         </form>
       </div>
+      <div v-if="user.loggedIn && user.getUser?.id == post.user_id">
+        <TransitionRoot as="template" :show="modalOpen">
+          <Dialog as="div" class="relative z-10" @close="modalOpen = false">
+            <TransitionChild
+              as="template"
+              enter="ease-out duration-300"
+              enter-from="opacity-0"
+              enter-to="opacity-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100"
+              leave-to="opacity-0"
+            >
+              <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+            </TransitionChild>
+
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+              <div
+                class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0"
+              >
+                <TransitionChild
+                  as="template"
+                  enter="ease-out duration-300"
+                  enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enter-to="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leave-from="opacity-100 translate-y-0 sm:scale-100"
+                  leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                  <DialogPanel
+                    class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
+                  >
+                    <div>
+                      <div class="text-center sm:mt-5">
+                        <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900"
+                          >Editer {{ post.title }}</DialogTitle
+                        >
+                        <div class="mt-2">
+                          <p class="text-sm text-gray-500">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+                            amet labore.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-5 sm:mt-6">
+                      <button
+                        type="button"
+                        class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        @click="open = false"
+                      >
+                        Go back to dashboard
+                      </button>
+                    </div>
+                  </DialogPanel>
+                </TransitionChild>
+              </div>
+            </div>
+          </Dialog>
+        </TransitionRoot>
+      </div>
     </div>
   </div>
 </template>
@@ -144,6 +211,9 @@ import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
 import Swal from 'sweetalert2'
 import 'lazysizes'
+
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { CheckIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps(['post', 'id', 'likes_count'])
 
@@ -202,6 +272,11 @@ const deletePost = () => {
       store.deletePost(props.post.id, props.post.user_id)
     }
   })
+}
+
+const modalOpen = ref(false)
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value
 }
 </script>
 
