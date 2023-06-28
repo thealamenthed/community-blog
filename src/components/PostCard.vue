@@ -153,6 +153,7 @@
             >
               <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
             </TransitionChild>
+            <ErrorMessages v-if="errors.errors.length" :errors="errors.errors" />
 
             <div class="fixed inset-0 z-10 overflow-y-auto">
               <div
@@ -175,6 +176,7 @@
                         <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900"
                           >Editer {{ post.title }}</DialogTitle
                         >
+
                         <form
                           @submit.prevent="onSubmit"
                           method="post"
@@ -195,7 +197,7 @@
                                   v-model="form.title"
                                   type="text"
                                   name="title"
-                                  autocomplete="title"
+                                  placeholder="Title"
                                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
@@ -203,7 +205,7 @@
 
                             <div class="sm:col-span-2">
                               <label
-                                for="message"
+                                for="content"
                                 class="flex text-sm font-semibold leading-6 text-gray-900"
                                 >Content</label
                               >
@@ -217,41 +219,52 @@
                               </div>
                             </div>
                             <div class="sm:col-span-2">
-                              <label
-                                for="file"
-                                class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                                >Modifier l'image
+                              <div class="flex text-sm font-semibold leading-6 text-gray-900">
+                                Modifier l'image
+                              </div>
+                              <div class="mt-2.5">
+                                <div
+                                  class="flex justify-center max-w-2xl px-6 py-10 border border-dashed rounded-lg border-gray-900/25"
+                                >
+                                  <div class="text-center">
+                                    <div class="flex mt-4 text-sm leading-6 text-gray-600">
+                                      <label
+                                        for="file"
+                                        class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                                      >
+                                        <span>Choisir une image</span>
+                                        <input
+                                          @change="selectFile($event)"
+                                          ref="file"
+                                          id="file"
+                                          name="file"
+                                          type="file"
+                                          class="sr-only"
+                                        />
 
-                                <input
-                                  type="file"
-                                  @change="selectFile($event)"
-                                  name="file"
-                                  accept="image/jpeg, image/png"
-                                  class="sr-only"
-                                  ref="file"
-                                />
+                                        <div v-if="imageUrl" class="mb-3">
+                                          <img :src="imageUrl" class="" width="150" height="150" />
+                                        </div>
+                                        <div>
+                                          <div
+                                            v-show="showProgression"
+                                            class="mb-2 overflow-hidden bg-gray-200 rounded-full"
+                                          >
+                                            <div
+                                              class="h-2 bg-indigo-600 rounded-full"
+                                              :style="'width:' + progression + '%'"
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </label>
+                                    </div>
 
-                                <div v-if="imageUrl" class="mb-3">
-                                  <img
-                                    :src="imageUrl"
-                                    alt="image"
-                                    class=""
-                                    width="150"
-                                    height="150"
-                                  />
-                                </div>
-                                <div>
-                                  <div
-                                    v-show="showProgression"
-                                    class="mb-2 overflow-hidden bg-gray-200 rounded-full"
-                                  >
-                                    <div
-                                      class="h-2 bg-indigo-600 rounded-full"
-                                      :style="'width:' + progression + '%'"
-                                    ></div>
+                                    <p class="text-xs leading-5 text-center text-gray-600">
+                                      PNG, JPG up to 10MB
+                                    </p>
                                   </div>
                                 </div>
-                              </label>
+                              </div>
                             </div>
                             <div class="sm:col-span-2">
                               <label
@@ -299,6 +312,8 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
+import axios from 'axios'
+import ErrorMessages from './ErrorMessages.vue'
 import Swal from 'sweetalert2'
 import 'lazysizes'
 
@@ -391,6 +406,68 @@ const selectFile = (event) => {
     console.log(e.target.result)
   }
   reader.readAsDataURL(event.target.files[0])
+}
+
+const errors = reactive({
+  errors: []
+})
+
+const onSubmit = async () => {
+  errors.errors = []
+  await axios.get('/sanctum/csrf-cookie')
+  let formData = new FormData()
+  formData.append('file', fileToSend.value ?? null)
+  formData.append('title', form.title)
+  formData.append('content', form.content)
+  formData.append('category_id', form.category_id)
+  formData.append('user_id', form.user_id)
+  formData.append('post_id', form.post_id)
+
+  await axios
+    .post('/post/update', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8;'
+      },
+      onUploadProgress: (e) => {
+        if (fileToSend.value && form.title && form.content && form.category_id) {
+          showProgression.value = true
+          let percentCompleted = Math.round((e.loaded * 100) / e.total)
+          console.log(percentCompleted)
+          progression.value = percentCompleted
+          if (percentCompleted === 100) {
+            setTimeout(() => {
+              progression.value = 0
+              showProgression.value = false
+              router.push({ name: 'home' })
+            }, 2000)
+          }
+        }
+      }
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Succès',
+          text: response.data.message,
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          timer: 2000
+        }).then((result) => {
+          toggleModal()
+        })
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      if (error.response.status === 422) {
+        for (const key in error.response.data.errors) {
+          errors.errors.push(error.response.data.errors[key][0] + ' ')
+        }
+        console.log(errors.errors)
+      }
+    })
 }
 </script>
 

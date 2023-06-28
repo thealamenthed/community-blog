@@ -37,7 +37,6 @@ export const usePostStore = defineStore({
             this.posts = []
             this.posts = response.data.posts
             this.posts_count = response.data.posts_count
-            console.log(this.posts)
           }
         })
         .catch((error) => {
@@ -91,6 +90,7 @@ export const usePostStore = defineStore({
           }
         })
     },
+
     async getSearch(search, sort = null) {
       if (!search) {
         this.$router.push({ name: 'home' })
@@ -115,8 +115,8 @@ export const usePostStore = defineStore({
           console.log(error)
         })
     },
+
     async like(props) {
-      console.log(props)
       await axios
         .post('/like/' + props.post_id + '/' + props.user_id, { props: props })
         .then((response) => {
@@ -127,11 +127,9 @@ export const usePostStore = defineStore({
         })
         .catch((error) => {
           console.log(error)
-          if (error.response.status == 404) {
-            this.$router.push({ name: 'login' })
-          }
         })
     },
+
     async getCategory(slug, sort = null) {
       this.posts = []
       this.loading = true
@@ -153,9 +151,9 @@ export const usePostStore = defineStore({
           console.log(error)
         })
     },
+
     async getCategories() {
       this.categories = []
-
       await this.csrf()
       await axios
         .get('/categories')
@@ -170,6 +168,7 @@ export const usePostStore = defineStore({
           console.log(error)
         })
     },
+
     async deletePost(post_id, user_id) {
       await this.csrf()
       await axios

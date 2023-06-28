@@ -105,7 +105,7 @@
                               </div>
                               <div>
                                 <div
-                                  v-if="showProgression"
+                                  v-show="showProgression"
                                   class="mb-2 overflow-hidden bg-gray-200 rounded-full"
                                 >
                                   <div
