@@ -216,6 +216,59 @@
                                 />
                               </div>
                             </div>
+                            <div class="sm:col-span-2">
+                              <label
+                                for="file"
+                                class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                                >Modifier l'image
+
+                                <input
+                                  type="file"
+                                  @change="selectFile($event)"
+                                  name="file"
+                                  accept="image/jpeg, image/png"
+                                  class="sr-only"
+                                  ref="file"
+                                />
+
+                                <div v-if="imageUrl" class="mb-3">
+                                  <img
+                                    :src="imageUrl"
+                                    alt="image"
+                                    class=""
+                                    width="150"
+                                    height="150"
+                                  />
+                                </div>
+                                <div>
+                                  <div
+                                    v-show="showProgression"
+                                    class="mb-2 overflow-hidden bg-gray-200 rounded-full"
+                                  >
+                                    <div
+                                      class="h-2 bg-indigo-600 rounded-full"
+                                      :style="'width:' + progression + '%'"
+                                    ></div>
+                                  </div>
+                                </div>
+                              </label>
+                            </div>
+                            <div class="sm:col-span-2">
+                              <label
+                                for="category_id"
+                                class="flex text-sm font-medium leading-6 text-gray-900"
+                                >Category</label
+                              >
+                              <select
+                                name="category_id"
+                                class="block mt-2 w-full rounded-md border-0 py-1.5 px-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                v-model="form.category_id"
+                              >
+                                <option v-for="cat in categories" :value="cat.id" :key="cat">
+                                  {{ cat.name }}
+                                </option>
+                              </select>
+                            </div>
                           </div>
                           <div class="mt-10">
                             <button
@@ -245,24 +298,38 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
+import { storeToRefs } from 'pinia'
 import Swal from 'sweetalert2'
 import 'lazysizes'
 
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { CheckIcon } from '@heroicons/vue/24/outline'
 
-const props = defineProps(['post', 'id', 'likes_count'])
+const props = defineProps(['post', 'id', 'likes_count', 'category_id'])
 
 const user = useUserStore()
 const store = usePostStore()
-const { getCategory } = store
+const { categories } = storeToRefs(store)
+const { getCategory, getCategories } = store
+
+getCategories()
 
 const router = useRouter()
 
 const form = reactive({
   post_id: props.id,
-  user_id: user.getUser?.id
+  user_id: user.getUser?.i,
+  title: props.post.title,
+  content: props.post.content,
+  category_id: props.post.category_id
 })
+
+const progression = ref(0)
+const showProgression = ref(null)
+
+const imageUrl = ref(props.post.photo.thumbnail_url)
+const file = ref(null)
+const fileToSend = ref(null)
 
 const emit = defineEmits({
   like: ({ user_id }) => {
@@ -313,6 +380,17 @@ const deletePost = () => {
 const modalOpen = ref(false)
 const toggleModal = () => {
   modalOpen.value = !modalOpen.value
+}
+
+const selectFile = (event) => {
+  file.value = fileToSend.value = event.target.files[0]
+  console.log(file.value)
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    imageUrl.value = e.target.result
+    console.log(e.target.result)
+  }
+  reader.readAsDataURL(event.target.files[0])
 }
 </script>
 
