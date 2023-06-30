@@ -50,11 +50,18 @@
       <p class="text-sm text-gray-500">
         {{ post.user.name }}
       </p>
-      <div v-if="user.loggedIn && user.getUser?.id == post.user_id">
+      <div class="flex" v-if="user.loggedIn && user.getUser?.id == post.user_id">
+        <button
+          @click.prevent="toggleModal"
+          type="button"
+          className="mr-3 rounded bg-blue-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Editer
+        </button>
         <button
           @click.prevent="deletePost"
           type="button"
-          className="rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className=" rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Suppimer
         </button>
@@ -132,6 +139,168 @@
           </button>
         </form>
       </div>
+      <div v-if="user.loggedIn && user.getUser?.id == post.user_id">
+        <TransitionRoot as="template" :show="modalOpen">
+          <Dialog as="div" class="relative z-10" @close="modalOpen = false">
+            <TransitionChild
+              as="template"
+              enter="ease-out duration-300"
+              enter-from="opacity-0"
+              enter-to="opacity-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100"
+              leave-to="opacity-0"
+            >
+              <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+            </TransitionChild>
+            <ErrorMessages v-if="errors.errors.length" :errors="errors.errors" />
+
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+              <div
+                class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0"
+              >
+                <TransitionChild
+                  as="template"
+                  enter="ease-out duration-300"
+                  enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enter-to="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leave-from="opacity-100 translate-y-0 sm:scale-100"
+                  leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                  <DialogPanel
+                    class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
+                  >
+                    <div>
+                      <div class="text-center sm:mt-5">
+                        <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900"
+                          >Editer {{ post.title }}</DialogTitle
+                        >
+
+                        <form
+                          @submit.prevent="onSubmit"
+                          method="post"
+                          class="max-w-xl mx-auto mt-16 sm:mt-20"
+                        >
+                          <input type="hidden" name="post_id" :value="form.post_id" />
+                          <input type="hidden" name="user_id" :value="form.user_id" />
+
+                          <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div class="sm:col-span-2">
+                              <label
+                                for="title"
+                                class="flex text-sm font-semibold leading-6 text-gray-900"
+                                >Title</label
+                              >
+                              <div class="mt-2.5">
+                                <input
+                                  v-model="form.title"
+                                  type="text"
+                                  name="title"
+                                  placeholder="Title"
+                                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                              <label
+                                for="content"
+                                class="flex text-sm font-semibold leading-6 text-gray-900"
+                                >Content</label
+                              >
+                              <div class="mt-2.5">
+                                <textarea
+                                  v-model="form.content"
+                                  name="content"
+                                  rows="4"
+                                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                              </div>
+                            </div>
+                            <div class="sm:col-span-2">
+                              <div class="flex text-sm font-semibold leading-6 text-gray-900">
+                                Modifier l'image
+                              </div>
+                              <div class="mt-2.5">
+                                <div
+                                  class="flex justify-center max-w-2xl px-6 py-10 border border-dashed rounded-lg border-gray-900/25"
+                                >
+                                  <div class="text-center">
+                                    <div class="flex mt-4 text-sm leading-6 text-gray-600">
+                                      <label
+                                        for="file"
+                                        class="relative font-semibold text-indigo-600 bg-white rounded-md cursor-pointer focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                                      >
+                                        <span>Choisir une image</span>
+                                        <input
+                                          @change="selectFile($event)"
+                                          ref="file"
+                                          id="file"
+                                          name="file"
+                                          type="file"
+                                          class="sr-only"
+                                        />
+
+                                        <div v-if="imageUrl" class="mb-3">
+                                          <img :src="imageUrl" class="" width="150" height="150" />
+                                        </div>
+                                        <div>
+                                          <div
+                                            v-show="showProgression"
+                                            class="mb-2 overflow-hidden bg-gray-200 rounded-full"
+                                          >
+                                            <div
+                                              class="h-2 bg-indigo-600 rounded-full"
+                                              :style="'width:' + progression + '%'"
+                                            ></div>
+                                          </div>
+                                        </div>
+                                      </label>
+                                    </div>
+
+                                    <p class="text-xs leading-5 text-center text-gray-600">
+                                      PNG, JPG up to 10MB
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="sm:col-span-2">
+                              <label
+                                for="category_id"
+                                class="flex text-sm font-medium leading-6 text-gray-900"
+                                >Category</label
+                              >
+                              <select
+                                name="category_id"
+                                class="block mt-2 w-full rounded-md border-0 py-1.5 px-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                v-model="form.category_id"
+                              >
+                                <option v-for="cat in categories" :value="cat.id" :key="cat">
+                                  {{ cat.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="mt-10">
+                            <button
+                              type="submit"
+                              class="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </DialogPanel>
+                </TransitionChild>
+              </div>
+            </div>
+          </Dialog>
+        </TransitionRoot>
+      </div>
     </div>
   </div>
 </template>
@@ -142,21 +311,40 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { usePostStore } from '@/stores/post'
+import { storeToRefs } from 'pinia'
+import axios from 'axios'
+import ErrorMessages from './ErrorMessages.vue'
 import Swal from 'sweetalert2'
 import 'lazysizes'
 
-const props = defineProps(['post', 'id', 'likes_count'])
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { CheckIcon } from '@heroicons/vue/24/outline'
+
+const props = defineProps(['post', 'id', 'likes_count', 'category_id'])
 
 const user = useUserStore()
 const store = usePostStore()
-const { getCategory } = store
+const { categories } = storeToRefs(store)
+const { getCategory, getCategories } = store
+
+getCategories()
 
 const router = useRouter()
 
 const form = reactive({
   post_id: props.id,
-  user_id: user.getUser?.id
+  user_id: user.getUser?.id,
+  title: props.post.title,
+  content: props.post.content,
+  category_id: props.post.category_id
 })
+
+const progression = ref(0)
+const showProgression = ref(null)
+
+const imageUrl = ref(props.post.photo.thumbnail_url)
+const file = ref(null)
+const fileToSend = ref(null)
 
 const emit = defineEmits({
   like: ({ user_id }) => {
@@ -202,6 +390,86 @@ const deletePost = () => {
       store.deletePost(props.post.id, props.post.user_id)
     }
   })
+}
+
+const modalOpen = ref(false)
+const toggleModal = () => {
+  modalOpen.value = !modalOpen.value
+}
+
+const selectFile = (event) => {
+  file.value = fileToSend.value = event.target.files[0]
+  console.log(file.value)
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    imageUrl.value = e.target.result
+    console.log(e.target.result)
+  }
+  reader.readAsDataURL(event.target.files[0])
+}
+
+const errors = reactive({
+  errors: []
+})
+
+const onSubmit = async () => {
+  errors.errors = []
+  await axios.get('/sanctum/csrf-cookie')
+  let formData = new FormData()
+  formData.append('file', fileToSend.value ?? null)
+  formData.append('title', form.title)
+  formData.append('content', form.content)
+  formData.append('category_id', form.category_id)
+  formData.append('user_id', form.user_id)
+  formData.append('post_id', form.post_id)
+
+  await axios
+    .post('/post/update', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8;'
+      },
+      onUploadProgress: (e) => {
+        if (fileToSend.value && form.title && form.content && form.category_id) {
+          showProgression.value = true
+          let percentCompleted = Math.round((e.loaded * 100) / e.total)
+          console.log(percentCompleted)
+          progression.value = percentCompleted
+          if (percentCompleted === 100) {
+            setTimeout(() => {
+              progression.value = 0
+              showProgression.value = false
+              router.push({ name: 'home' })
+            }, 2000)
+          }
+        }
+      }
+    })
+    .then((response) => {
+      console.log(response)
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Succès',
+          text: response.data.message,
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          timer: 2000
+        }).then((result) => {
+          toggleModal()
+        })
+
+        window.location.reload()
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      if (error.response.status === 422) {
+        for (const key in error.response.data.errors) {
+          errors.errors.push(error.response.data.errors[key][0] + ' ')
+        }
+        console.log(errors.errors)
+      }
+    })
 }
 </script>
 

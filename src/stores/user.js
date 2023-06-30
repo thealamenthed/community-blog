@@ -18,27 +18,32 @@ export const useUserStore = defineStore({
   },
 
   actions: {
-    // partie csrf
     async csrf() {
       await axios.get('/sanctum/csrf-cookie')
     },
 
-    // partie inscription
     async register(props) {
-      this.errors = [] // re initialise le tableau des erreurs
+      this.errors = []
       await this.csrf()
       await axios
         .post('/register', props)
         .then((response) => {
           console.log(response)
           if (response.status == 201) {
+            // const user = response.data.user;
+            // const token = response.data.token;
+            // localStorage.setItem('user', JSON.stringify(user))
+            // localStorage.setItem('token', token)
+            // axios.defaults.headers.common['Authorization'] = token;
+            // this.loggedIn = true;
+            // this.user = user;
             this.loginUser(response)
             this.$router.push({ name: 'dashboard' })
           }
         })
         .catch((error) => {
           console.log(error)
-          if (error.response.status === 422) {
+          if (error.response.status == 422) {
             for (const key in error.response.data.errors) {
               this.errors.push(error.response.data.errors[key][0] + ' ')
             }
@@ -47,7 +52,6 @@ export const useUserStore = defineStore({
         })
     },
 
-    // partie connexion
     async login(props) {
       this.errors = []
       await this.csrf()
@@ -56,6 +60,13 @@ export const useUserStore = defineStore({
         .then((response) => {
           console.log(response)
           if (response.status == 200) {
+            // const user = response.data.user;
+            // const token = response.data.token;
+            // localStorage.setItem('user', JSON.stringify(user));
+            // localStorage.setItem('token', token);
+            // axios.defaults.headers.common['Authorization'] = token;
+            // this.loggedIn = true;
+            // this.user = user;
             this.loginUser(response)
             this.$router.push({ name: 'dashboard' })
           }
@@ -74,7 +85,6 @@ export const useUserStore = defineStore({
         })
     },
 
-    // partie déconnexion
     async logout() {
       await this.csrf()
       await axios
@@ -97,10 +107,10 @@ export const useUserStore = defineStore({
     loginUser(response) {
       const user = response.data.user
       const token = response.data.token
-      localStorage.setItem('user', JSON.stringify(user)) // enregistre l'user et le token dans le storage et tranforme en Json
+      localStorage.setItem('user', JSON.stringify(user))
       localStorage.setItem('token', token)
-      axios.defaults.headers.common['Authorization'] = token // définis axios par défaut, toutes requetes auront en en-tete le token
-      this.loggedIn = true // user est login
+      axios.defaults.headers.common['Authorization'] = token
+      this.loggedIn = true
       this.user = user
     },
 
@@ -109,11 +119,12 @@ export const useUserStore = defineStore({
       await axios
         .delete('/user/destroy/' + this.getUser.id)
         .then((response) => {
+          console.log(response)
           if (response.status == 200) {
             this.token = null
             localStorage.clear()
             this.$reset()
-            this.$router.push({ name: 'register' })
+            this.$router.push({ name: 'login' })
           }
         })
         .catch((error) => {

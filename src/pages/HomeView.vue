@@ -94,7 +94,13 @@
           :key="post.id"
           class="w-full px-4 md:w-1/2 lg:w-1/3"
         >
-          <PostCard :post="post" :id="post.id" :likes_count="post.likes_count" @like="likePost" />
+          <PostCard
+            :post="post"
+            :id="post.id"
+            :category_id="post.category_id"
+            :likes_count="post.likes_count"
+            @like="likePost"
+          />
         </div>
       </div>
       <div class="flex flex-wrap justify-center">
