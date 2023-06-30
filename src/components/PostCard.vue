@@ -333,7 +333,7 @@ const router = useRouter()
 
 const form = reactive({
   post_id: props.id,
-  user_id: user.getUser?.i,
+  user_id: user.getUser?.id,
   title: props.post.title,
   content: props.post.content,
   category_id: props.post.category_id
@@ -457,6 +457,8 @@ const onSubmit = async () => {
         }).then((result) => {
           toggleModal()
         })
+
+        window.location.reload()
       }
     })
     .catch((error) => {
