@@ -1,6 +1,15 @@
 <template>
   <div class="m-10 space-y-10 divide-y divide-gray-900/10">
-    <h1 class="text-lg">{{ title }} {{ name }}</h1>
+    <h1 class="flex items-center text-lg">
+      {{ title }} {{ name }}
+      <a
+        v-if="user.loggedIn"
+        @click.prevent="user.logout"
+        href="."
+        class="px-3 py-2 ml-auto text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >Log out</a
+      >
+    </h1>
     <div class="grid grid-cols-1 pt-10 gap-x-8 gap-y-8 md:grid-cols-4">
       <div class="px-4 sm:px-0">
         <h2 class="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
