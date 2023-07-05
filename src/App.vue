@@ -1,6 +1,5 @@
 <template>
-  <TheHeader />
-  <TheNavBar />
+  <TheNavBarBis />
 
   <RouterView> </RouterView>
 
@@ -18,7 +17,7 @@
 
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import TheNavBar from './components/TheNavBar.vue'
+
+import TheNavBarBis from './components/TheNavBarBis.vue'
 import TheFooter from './components/TheFooter.vue'
-import TheHeader from './components/TheHeader.vue'
 </script>
