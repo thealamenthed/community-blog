@@ -19,6 +19,8 @@ const router = createRouter({
       component: () => import('../pages/RegisterView.vue'),
       meta: {
         title: 'Inscription',
+        hideNavBar: true, // Masquer la barre de navigation
+        hideFooter: true, // Masquer le footer
         requiresGuest: true
       }
     },
@@ -28,6 +30,8 @@ const router = createRouter({
       component: () => import('../pages/LoginView.vue'),
       meta: {
         title: 'Connexion',
+        hideNavBar: true, // Masquer la barre de navigation
+        hideFooter: true, // Masquer le footer
         requiresGuest: true
       }
     },

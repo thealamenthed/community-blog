@@ -69,6 +69,7 @@ export const useUserStore = defineStore({
             // this.user = user;
             this.loginUser(response)
             this.$router.push({ name: 'dashboard' })
+            location.reload(false)
           }
         })
         .catch((error) => {

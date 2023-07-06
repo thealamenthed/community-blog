@@ -11,17 +11,15 @@
             alt="Your Company"
           />
           <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Connexion</h2>
-          
+
           <div>
-            <ErrorMessages v-if="user.getErrors.length" :errors='user.getErrors'
-            />
+            <ErrorMessages v-if="user.getErrors.length" :errors="user.getErrors" />
           </div>
         </div>
 
         <div class="mt-8">
-        
           <div class="mt-6">
-            <form @submit.prevent="submit" action="/login" method="POST" class="space-y-6">
+            <form @submit.prevent="submit" action="/login" method="post" class="space-y-6">
               <div class="block text-sm font-medium leading-6 text-gray-900">
                 <div class="mt-1">
                   <BaseInput
@@ -56,7 +54,7 @@
               <div class="flex items-center justify-between">
                 <div class="text-sm">
                   <div class="font-medium text-indigo-600 hover:text-indigo-500">
-                    <router-link to="/register">Don't have account yet ?</router-link>
+                    <router-link to="/register">Don't have account yet?</router-link>
                   </div>
                 </div>
               </div>
@@ -83,12 +81,12 @@ import { useUserStore } from '@/stores/user.js'
 
 const user = useUserStore()
 
-const submit = () => {
-  user.login(form)
-}
-
 const form = reactive({
   email: '',
   password: ''
 })
+
+const submit = () => {
+  user.login(form)
+}
 </script>
