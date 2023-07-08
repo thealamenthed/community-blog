@@ -1,6 +1,6 @@
 <template>
   <div class="m-10 space-y-10 divide-y divide-gray-900/10">
-    <h1 class="text-lg">{{ title }} {{ name }}</h1>
+    <h1 class="flex items-center justify-between text-lg lg:flex-1">{{ title }} {{ name }}</h1>
     <div class="grid grid-cols-1 pt-10 gap-x-8 gap-y-8 md:grid-cols-4">
       <div class="px-4 sm:px-0">
         <h2 class="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
@@ -56,19 +56,6 @@
                   >Photo</label
                 >
                 <div class="mt-2">
-                  <!-- <div class="flex items-center mt-2 gap-x-3">
-                    <UserCircleIcon class="w-12 h-12 text-gray-300" aria-hidden="true" />
-                    <button
-                      @change="selectFile($event)"
-                      ref="file"
-                      name="file"
-                      type="file"
-                      class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      Change
-                    </button>
-                  </div> -->
-
                   <div class="sm:grid sm:grid-cols-1 sm:items-start sm:gap-4 sm:py-6">
                     <div class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">
                       Ajouter une image
@@ -118,7 +105,7 @@
                           </div>
 
                           <p class="text-xs leading-5 text-center text-gray-600">
-                            PNG, JPG, GIF up to 10MB
+                            PNG, JPG up to 10MB
                           </p>
                         </div>
                       </div>
@@ -130,9 +117,6 @@
             <div
               class="flex items-center justify-start px-4 py-4 border-t gap-x-6 border-gray-900/10 sm:px-8"
             >
-              <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
-                Cancel
-              </button>
               <button
                 type="submit"
                 class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -167,7 +151,6 @@ import { useUserStore } from '@/stores/user'
 import axios from 'axios'
 import ErrorMessages from '@/components/ErrorMessages.vue'
 import Swal from 'sweetalert2'
-// import Swal from 'sweetalert2'
 
 const router = useRouter()
 const user = useUserStore()
@@ -217,7 +200,7 @@ const onSubmit = async () => {
             setTimeout(() => {
               progression.value = 0
               showProgression.value = false
-              // router.push({name: 'home'})
+              router.push({ name: 'home' })
             }, 2000)
           }
         }

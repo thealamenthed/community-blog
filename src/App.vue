@@ -1,24 +1,11 @@
 <template>
-  <TheHeader />
-  <TheNavBar />
-
+  <TheNavBar v-if="!$route.meta.hideNavBar" />
   <RouterView> </RouterView>
-
-  <TheFooter />
-
-  <!-- <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-
-
-  <RouterView /> -->
+  <TheFooter v-if="!$route.meta.hideFooter" />
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { RouterView } from 'vue-router'
 import TheNavBar from './components/TheNavBar.vue'
 import TheFooter from './components/TheFooter.vue'
-import TheHeader from './components/TheHeader.vue'
 </script>

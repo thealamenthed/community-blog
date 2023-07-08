@@ -1,15 +1,54 @@
 <template>
-  <div
-    class="overflow-hidden antialiased bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400 -ms-overflow-style: none"
-  >
-    <div class="px-4">
-      <div
-        class="flex items-center justify-center max-w-2xl p-16 mx-auto my-16 bg-white rounded-lg"
-      >
-        <h1 class="text-2xl font-medium">{{ title }}</h1>
+  <main class="isolate">
+    <!-- Hero section -->
+
+    <div class="">
+      <div class="relative">
+        <div class="mx-auto max-w-7xl">
+          <div class="relative z-10 lg:w-full lg:max-w-2xl">
+            <svg
+              class="absolute inset-y-0 hidden h-full transform translate-x-1/2 right-8 w-80 fill-white lg:block"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <polygon points="0,0 90,0 50,100 0,100" />
+            </svg>
+
+            <div class="relative px-6 py-32 sm:py-40 lg:px-8 lg:py-56 lg:pr-0">
+              <div class="max-w-2xl mx-auto lg:mx-0 lg:max-w-xl">
+                <div class="hidden sm:mb-10 sm:flex"></div>
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                  Best Brunch !
+                </h1>
+                <p class="mt-6 text-lg leading-8 text-gray-600">
+                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
+                  commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
+                </p>
+                <div class="flex items-center mt-10 gap-x-6">
+                  <a
+                    href="#"
+                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >Get started</a
+                  >
+                  <a href="#" class="text-sm font-semibold leading-6 text-gray-900"
+                    >Learn more <span aria-hidden="true">→</span></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+          <img
+            class="aspect-[3/2] object-cover lg:aspect-auto lg:h-full lg:w-full"
+            src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=898&q=80"
+            alt=""
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <!-- ====== Blog Section Start -->
   <section class="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
