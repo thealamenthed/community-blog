@@ -146,6 +146,15 @@
             >
             <DisclosureButton
               as="a"
+              v-if="user.loggedIn"
+              class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+              href="/create-post"
+            >
+              Poster
+            </DisclosureButton>
+
+            <DisclosureButton
+              as="a"
               @click.prevent="user.logout"
               href="."
               class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
