@@ -25,7 +25,7 @@
               <a href="/">
                 <img
                   class="hidden w-auto h-32 lg:block"
-                  src="/src/assets/logo.png"
+                  src="/src/assets/img/logo.png"
                   alt="Your Company"
                 />
               </a>
@@ -53,8 +53,8 @@
               <Menu as="div" v-if="user.loggedIn" class="relative ml-3">
                 <div>
                   <MenuButton
-                    class="flex text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
+                    class="flex items-center text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-offset-2"
+                    ><span class="m-2 font-serif">Hello {{ user.getUser?.name }}</span>
                     <span class="sr-only">Open user menu</span>
                     <img
                       v-if="src"
@@ -64,7 +64,12 @@
                       }"
                       alt=""
                     />
-                    <span v-else class="w-10 h-10 bg-purple-500 rounded-full" />
+                    <img
+                      v-else
+                      src="/src/assets/img/profile-img.png"
+                      alt="Your Company"
+                      class="w-10 h-10 bg-pink-200 rounded-full"
+                    />
                   </MenuButton>
                 </div>
                 <transition
