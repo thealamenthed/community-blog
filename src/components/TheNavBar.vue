@@ -53,8 +53,8 @@
               <Menu as="div" v-if="user.loggedIn" class="relative ml-3">
                 <div>
                   <MenuButton
-                    class="flex items-center text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-offset-2"
-                    ><span class="m-2 font-serif">Hello {{ user.getUser?.name }}</span>
+                    class="flex items-center text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2"
+                    ><span class="m-2 font-mono">Hello {{ user.getUser?.name }}</span>
                     <span class="sr-only">Open user menu</span>
                     <img
                       v-if="src"
@@ -68,7 +68,7 @@
                       v-else
                       src="/src/assets/img/profile-img.png"
                       alt="Your Company"
-                      class="w-10 h-10 bg-pink-200 rounded-full"
+                      class="inline-block w-12 h-12 pl-1 pr-1 bg-pink-200 rounded-full"
                     />
                   </MenuButton>
                 </div>
@@ -227,10 +227,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { PlusIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
-  { name: 'Catégorie 1', href: '#' },
-  { name: 'Catégorie 2', href: '#' },
-  { name: 'Catégorie 2', href: '#' },
-  { name: 'Catégorie 2', href: '#' }
+  { name: 'Link', href: '#' },
+  { name: 'Link', href: '#' },
+  { name: 'Link', href: '#' }
 ]
 
 const user = useUserStore()
