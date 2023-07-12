@@ -72,7 +72,7 @@
         <p class="text-3xl font-extrabold text-white md:text-5xl">
           Make your brunch an ode to joy !
         </p>
-        <p class="text-xl text-white md:text-2xl">Welcome to my Blog</p>
+        <p class="text-xl text-whitemd:text-2xl">Welcome to my Blog</p>
       </div>
     </div>
 
