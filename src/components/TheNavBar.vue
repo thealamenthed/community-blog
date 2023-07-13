@@ -54,7 +54,7 @@
                 <div>
                   <MenuButton
                     class="flex items-center text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2"
-                    ><span class="m-2 font-mono">Hello {{ user.getUser?.name }}</span>
+                    ><span class="m-2">Hello {{ user.getUser?.name }}</span>
                     <span class="sr-only">Open user menu</span>
                     <img
                       v-if="src"
