@@ -25,53 +25,23 @@
       </div>
     </div>
 
-    <!--Container-->
-    <section class="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
+    <section class="pt-3 pb-8 lg:pt-[120px] lg:pb-20">
       <div class="container mx-auto">
         <div class="flex flex-wrap justify-center -mx-4">
           <div class="w-full px-4">
             <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
               <h2 class="text-dark mb-4 text-3xl font-bold sm:text-4xl md:text-[40px]">
-                Our Recent News
+                From the blog
               </h2>
 
-              <p class="text-base text-body-color">
-                There are many variations of passages of Lorem Ipsum available but the majority have
-                suffered alteration in some form.
-              </p>
-              <p v-if="posts_count" class="text-base text-body-color">
-                Total : {{ posts_count }} posts
-              </p>
-              <div>
-                <select
-                  v-if="route.name == 'category.show' && route.params.slug"
-                  v-model="sort"
-                  @change="getCategory(route.params.slug, sort), resetResults()"
-                >
-                  <option v-for="option in options" :key="option.value" :value="option.value">
-                    {{ option.text }}
-                  </option>
-                </select>
-                <select
-                  v-else
-                  v-model="sort"
-                  @change="
-                    !route.query.search ? getPosts(sort) : getSearch(route.query.search, sort),
-                      resetResults()
-                  "
-                >
-                  <option v-for="option in options" :key="option.value" :value="option.value">
-                    {{ option.text }}
-                  </option>
-                </select>
-              </div>
+              <p class="text-base text-body-color">Last yummy brunch !</p>
             </div>
           </div>
         </div>
 
-        <!-- ====== Skeleton Section Start -->
+        <!--Skeleton-->
         <div v-if="loading" class="flex flex-wrap justify-center mx-4">
-          <div v-for="index in 9" :key="index" class="w-full px-8 md:w-1/2 lg:w-1/3">
+          <div v-for="index in 4" :key="index" class="w-full px-8 md:w-1/2 lg:w-1/4">
             <div class="mx-auto mb-10 max-w-[370px]">
               <div class="mb-8 overflow-hidden rounded">
                 <div class="overflow-hidden rounded w-96 bg-slate-200 h-52 animate-pulse"></div>
@@ -87,15 +57,16 @@
           </div>
         </div>
         <div v-if="error">{{ error.message }}</div>
-        <!-- ====== Skeleton Section End -->
+        <!--/Skeleton-->
 
+        <!--Container-->
         <div v-if="posts.length" class="flex flex-wrap -mx-4">
           <div
             v-for="post in posts.slice(0, results.resultsToShow)"
             :key="post.id"
-            class="w-full px-4 md:w-1/2 lg:w-1/3"
+            class="w-full px-4 md:w-1/2 lg:w-1/4"
           >
-            <PostCard
+            <PostCardCopy
               :post="post"
               :id="post.id"
               :category_id="post.category_id"
@@ -104,27 +75,38 @@
             />
           </div>
         </div>
-        <div class="flex flex-wrap justify-center">
-          <button
-            v-if="results.resultsToShow < posts.length"
-            @click="results.resultsToShow += 3"
-            class="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 rounded-md bg-blue-50 ring-1 ring-inset ring-gray-500/10"
-          >
-            Load more
-          </button>
+        <!--/Container-->
+        <!--top 5-->
+        <div class="container p-4 mt-8 font-sans text-center rounded bg-slate-100 md:p-24">
+          <h2 class="text-2xl font-bold break-normal md:text-4xl">Top five of brunch !</h2>
+          <h3 class="text-base font-bold text-gray-600 break-normal md:text-xl">Lorem !</h3>
+          <div v-if="posts.length" class="flex flex-wrap -mx-4">
+            <div
+              v-for="post in posts.slice(0, results.resultsToShow)"
+              :key="post.id"
+              class="w-full px-4 md:w-1/2 lg:w-1/4"
+            >
+              <PostCardCopy
+                :post="post"
+                :id="post.id"
+                :category_id="post.category_id"
+                :likes_count="post.likes_count"
+                @like="likePost"
+              />
+            </div>
+          </div>
         </div>
+        <!-- /Subscribe-->
       </div>
     </section>
   </body>
-
-  <!-- ====== Blog Section End -->
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { usePostStore } from '@/stores/post'
 import { storeToRefs } from 'pinia'
-import PostCard from '@/components/PostCard.vue'
+import PostCardCopy from '@/components/PostCardCopy.vue'
 import { useRoute } from 'vue-router'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
@@ -149,12 +131,14 @@ if (!route.query.search) {
   getSearch(route.query.search)
 }
 
+const totalItems = 4
+
 const results = reactive({
-  resultsToShow: 9
+  resultsToShow: totalItems
 })
 
 const resetResults = () => {
-  results.resultsToShow = 9
+  results.resultsToShow = totalItems
 }
 
 const sort = ref(null)

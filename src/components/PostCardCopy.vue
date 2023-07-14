@@ -1,342 +1,63 @@
 <template>
-  <div class="container max-w-6xl px-4 mx-auto -mt-32 md:px-0">
-    <div class="mx-0 sm:mx-6">
-      <div class="w-full text-xl leading-normal text-gray-800 bg-gray-200 rounded-t md:text-2xl">
-        <!--Lead Card-->
-        <div class="flex h-full overflow-hidden bg-white rounded shadow-lg">
-          <RouterLink
-            :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }"
-            class="flex flex-wrap no-underline hover:no-underline"
-          >
-            <div class="w-full rounded-t md:w-2/3">
-              <img
-                :data-src="post.photo.thumbnail_path"
-                :alt="post.title"
-                async="decoding"
-                class="w-full h-full shadow"
-              />
-            </div>
-          </RouterLink>
-
-          <div class="flex flex-col flex-grow flex-shrink w-full md:w-1/3">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <p class="w-full px-6 pt-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-              <div class="w-full px-6 text-xl font-bold text-gray-900">
-                👋 Welcome fellow Tailwind CSS and Ghost fan
-              </div>
-              <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                This starter template is an attempt to replicate the default Ghost theme "Casper"
-                using Tailwind CSS and vanilla Javascript.
-              </p>
-            </div>
-
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--/Lead Card-->
-
-        <!--Posts Container-->
-        <div class="flex flex-wrap justify-between pt-12 -mx-6">
-          <!--1/3 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-1/3">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <a
-                href="#"
-                class="flex flex-wrap no-underline transition duration-300 delay-150 hover:no-underline hover:delay-300"
-              >
-                <img
-                  src="https://source.unsplash.com/collection/225/800x600"
-                  class="w-full h-64 pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at ipsum eu nunc
-                  commodo posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-
-          <!--1/3 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-1/3">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-                <img
-                  src="https://source.unsplash.com/collection/3106804/800x600"
-                  class="w-full h-64 pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. ipsum dolor sit amet,
-                  consectetur adipiscing elit. Aliquam at ip Aliquam at ipsum eu nunc commodo
-                  posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-
-          <!--1/3 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-1/3">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-                <img
-                  src="https://source.unsplash.com/collection/539527/800x600"
-                  class="w-full h-64 pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum eu nunc commodo posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-
-          <!--1/2 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-1/2">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-                <img
-                  src="https://source.unsplash.com/collection/3657445/800x600"
-                  class="w-full h-full pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum eu nunc commodo posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-
-          <!--1/2 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-1/2">
-            <div
-              class="flex-row flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg"
-            >
-              <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-                <img
-                  src="https://source.unsplash.com/collection/764827/800x600"
-                  class="w-full h-full pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum eu nunc commodo posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-
-          <!--2/3 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-2/3">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-                <img
-                  src="https://source.unsplash.com/collection/325867/800x600"
-                  class="w-full h-full pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum eu nunc commodo posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-
-          <!--1/3 col -->
-          <div class="flex flex-col flex-grow flex-shrink w-full p-6 md:w-1/3">
-            <div class="flex-1 overflow-hidden bg-white rounded-t rounded-b-none shadow-lg">
-              <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-                <img
-                  src="https://source.unsplash.com/collection/1118905/800x600"
-                  class="w-full h-full pb-6 rounded-t"
-                />
-                <p class="w-full px-6 text-xs text-gray-600 md:text-sm">GETTING STARTED</p>
-                <div class="w-full px-6 text-xl font-bold text-gray-900">
-                  Lorem ipsum dolor sit amet.
-                </div>
-                <p class="px-6 mb-5 font-serif text-base text-gray-800">
-                  Lorem ipsum eu nunc commodo posuere et sit amet ligula.
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex-none p-6 mt-auto overflow-hidden bg-white rounded-t-none rounded-b shadow-lg"
-            >
-              <div class="flex items-center justify-between">
-                <img
-                  class="w-8 h-8 mr-4 rounded-full avatar"
-                  data-tippy-content="Author Name"
-                  src="http://i.pravatar.cc/300"
-                  alt="Avatar of Author"
-                />
-                <p class="text-xs text-gray-600 md:text-sm">1 MIN READ</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--/ Post Content-->
-      </div>
-
-      <!--Subscribe-->
-      <div class="container p-4 mt-8 font-sans text-center bg-green-100 rounded md:p-24">
-        <h2 class="text-2xl font-bold break-normal md:text-4xl">Subscribe to Ghostwind CSS</h2>
-        <h3 class="text-base font-normal font-bold text-gray-600 break-normal md:text-xl">
-          Get the latest posts delivered right to your inbox
-        </h3>
-        <div class="w-full pt-4 text-center">
-          <form action="#">
-            <div class="flex flex-wrap items-center max-w-xl p-1 pr-0 mx-auto">
-              <input
-                type="email"
-                placeholder="youremail@example.com"
-                class="flex-1 p-3 mr-2 text-gray-600 rounded shadow appearance-none focus:outline-none"
-              />
-              <button
-                type="submit"
-                class="flex-1 block py-4 mt-4 text-base font-semibold tracking-wider text-white uppercase bg-green-500 rounded shadow appearance-none md:mt-0 md:inline-block hover:bg-green-400"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- /Subscribe-->
-
-      <!--Author-->
-      <div class="flex items-center w-full p-8 font-sans md:p-24">
+  <div>
+    <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
+      <div class="relative w-full mt-5">
         <img
-          class="w-10 h-10 mr-4 rounded-full"
-          src="http://i.pravatar.cc/300"
-          alt="Avatar of Author"
+          :data-src="post.photo.thumbnail_path"
+          :alt="post.title"
+          async="decoding"
+          class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
         />
-        <div class="flex-1">
-          <p class="text-base font-bold leading-none md:text-xl">Ghostwind CSS</p>
-          <p class="text-xs text-gray-600 md:text-base">
-            Tailwind CSS version of Ghost's Casper theme by
-            <a
-              class="text-gray-800 no-underline border-b-2 border-green-500 hover:text-green-500"
-              href="https://www.tailwindtoolbox.com"
-              >TailwindToolbox.com</a
-            >
+        <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+      </div>
+    </RouterLink>
+
+    <div class="max-w-xl">
+      <div class="flex items-center mt-8 text-xs gap-x-4">
+        <time class="text-gray-500"> {{ moment(post.created_at).fromNow() }}</time>
+
+        <RouterLink
+          @click="getCategory(post.category.slug)"
+          :to="{
+            name: 'category.show',
+            params: { slug: post.category.slug, title: post.category.name }
+          }"
+          class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+          >{{ post.category.name }}</RouterLink
+        >
+      </div>
+
+      <div class="relative group">
+        <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+          <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
+            <span class="absolute inset-0" />
+            {{ post.title }}
+          </RouterLink>
+        </h3>
+
+        <p class="mt-5 text-sm leading-6 text-gray-600 line-clamp-3">
+          <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
+            {{ post.content }}
+          </RouterLink>
+        </p>
+      </div>
+      <div class="relative flex items-center mt-8 gap-x-4 mb-7">
+        <span
+          v-if="post.user?.avatar?.thumbnail_url"
+          :style="{ backgroundImage: 'url(' + post.user.avatar.thumbnail_url + ')' }"
+          class="w-10 h-10 bg-gray-100 rounded-full"
+        >
+        </span>
+
+        <div class="text-sm leading-6">
+          <p class="font-semibold text-gray-900">
+            <a :href="fff">
+              <span class="absolute inset-0" />
+              {{ post.user.name }}
+            </a>
           </p>
         </div>
-        <div class="justify-end">
-          <a
-            href="post.html"
-            class="px-4 py-2 text-xs font-bold text-gray-500 bg-transparent border border-gray-500 rounded-full hover:border-green-500 hover:text-green-500"
-            >Read More</a
-          >
-        </div>
       </div>
-      <!--/Author-->
     </div>
   </div>
 </template>
@@ -507,6 +228,29 @@ const onSubmit = async () => {
       }
     })
 }
+
+const posts = [
+  {
+    id: 1,
+    title: 'Boost your conversion rate',
+    href: '#',
+    description:
+      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
+    date: 'Mar 16, 2020',
+    datetime: '2020-03-16',
+    category: { title: 'Marketing', href: '#' },
+    author: {
+      name: 'Michael Foster',
+      role: 'Co-Founder / CTO',
+      href: '#',
+      imageUrl:
+        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
+    }
+  }
+  // More posts...
+]
 </script>
 
 <style scoped>
