@@ -1,5 +1,5 @@
 <template>
-  <header class="relative inset-x-0 top-0 z-50 bg-white">
+  <header class="fixed inset-x-0 top-0 z-50 bg-white bg-opacity-0">
     <Disclosure as="nav" class="bg-white shadow" v-slot="{ open }">
       <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -66,7 +66,7 @@
                     />
                     <img
                       v-else
-                      src="/src/assets/img/profile-img.png"
+                      src="/src/assets/img/profile-img-removebg-preview.png"
                       alt="Your Company"
                       class="inline-block w-12 h-12 pl-1 pr-1 bg-pink-200 rounded-full"
                     />
@@ -213,8 +213,6 @@
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import {
-  Dialog,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -223,8 +221,7 @@ import {
   MenuItem,
   MenuItems
 } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { PlusIcon } from '@heroicons/vue/20/solid'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const navigation = [
   { name: 'Link', href: '#' },
@@ -233,6 +230,4 @@ const navigation = [
 ]
 
 const user = useUserStore()
-
-const mobileMenuOpen = ref(false)
 </script>
