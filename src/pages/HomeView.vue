@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <section class="pt-3 pb-8 lg:pt-[120px] lg:pb-20">
+    <section class="pt-2 pb-8 lg:pt-10 lg:pb-20">
       <div class="container mx-auto">
         <div class="flex flex-wrap justify-center -mx-4">
           <div class="w-full px-4">

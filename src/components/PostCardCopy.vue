@@ -3,7 +3,7 @@
     <RouterLink :to="{ name: 'post.show', params: { slug: post.slug, title: post.title } }">
       <div class="relative w-full mt-5">
         <img
-          :data-src="post.photo.thumbnail_path"
+          :src="post.photo.thumbnail_path"
           :alt="post.title"
           async="decoding"
           class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
