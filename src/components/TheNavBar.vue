@@ -1,5 +1,5 @@
 <template>
-  <header class="relative inset-x-0 top-0 z-50 bg-white">
+  <header class="fixed inset-x-0 top-0 z-50 bg-white bg-opacity-0">
     <Disclosure as="nav" class="bg-white shadow" v-slot="{ open }">
       <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -53,8 +53,8 @@
               <Menu as="div" v-if="user.loggedIn" class="relative ml-3">
                 <div>
                   <MenuButton
-                    class="flex items-center text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-offset-2"
-                    ><span class="m-2 font-serif">Hello {{ user.getUser?.name }}</span>
+                    class="flex items-center text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-slate-200 focus:ring-offset-2"
+                    ><span class="m-2">Hello {{ user.getUser?.name }}</span>
                     <span class="sr-only">Open user menu</span>
                     <img
                       v-if="src"
@@ -66,9 +66,9 @@
                     />
                     <img
                       v-else
-                      src="/src/assets/img/profile-img.png"
+                      src="/src/assets/img/profile-img-removebg-preview.png"
                       alt="Your Company"
-                      class="w-10 h-10 bg-pink-200 rounded-full"
+                      class="inline-block w-12 h-12 pl-1 pr-1 bg-pink-200 rounded-full"
                     />
                   </MenuButton>
                 </div>
@@ -213,8 +213,6 @@
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import {
-  Dialog,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -223,17 +221,13 @@ import {
   MenuItem,
   MenuItems
 } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { PlusIcon } from '@heroicons/vue/20/solid'
+import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const navigation = [
-  { name: 'Catégorie 1', href: '#' },
-  { name: 'Catégorie 2', href: '#' },
-  { name: 'Catégorie 2', href: '#' },
-  { name: 'Catégorie 2', href: '#' }
+  { name: 'Link', href: '#' },
+  { name: 'Link', href: '#' },
+  { name: 'Link', href: '#' }
 ]
 
 const user = useUserStore()
-
-const mobileMenuOpen = ref(false)
 </script>
